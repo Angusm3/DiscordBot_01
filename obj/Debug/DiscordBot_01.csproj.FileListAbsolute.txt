@@ -16,3 +16,8 @@ c:\users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBo
 c:\users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\RestSharp.xml
 c:\users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\obj\Debug\DiscordBot_01.exe
 c:\users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\obj\Debug\DiscordBot_01.pdb
+C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\RollGen.dll
+C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Albatross.Expression.dll
+C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.dll
+C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\RollGen.Domain.dll
+C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.xml

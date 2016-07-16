@@ -28,20 +28,16 @@ namespace DiscordBot_01
         {
             if (e.Message.IsAuthor) return;
 
-            if(e.Message.Text == "!rules")
+            if(e.Message.Text == "!help")
             {
-                e.Channel.SendMessage(e.User.Mention + " Here's your stupid help asshole");
+                e.Channel.SendMessage(e.User.Mention + "Commands:\n1d4\n!help");
             }
-            if (e.Message.Text == "help")
+            if (e.Message.Text == "1d4")
             {
-                e.Channel.SendMessage(e.User.Mention + " Fack you");
+                DiceRoll var = new DiscordBot_01.DiceRoll();
+              e.Channel.SendMessage("Rolled .. " + DiceRoll.OneDieFour);
+            }
 
-            }
-            if (e.Message.Text == "+roll 1d20")
-            {
-                e.Channel.SendMessage("30");
-
-            }
         }
     }
 }
