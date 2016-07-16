@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DiscordBot_01
 {
     public class ManshowBot
@@ -20,7 +21,7 @@ namespace DiscordBot_01
             bot.ExecuteAndWait(async () =>
             {
                 bot.MessageReceived += Bot_MessageReceived;
-                await bot.Connect("treeforge2.al@gmail.com", "Zninern4");
+                await bot.Connect("treeforge2.al@gmail.com", "superbotpassword");
             });
         }
 
@@ -30,32 +31,65 @@ namespace DiscordBot_01
 
             if(e.Message.Text == "!help")
             {
-                e.Channel.SendMessage(e.User.Mention + "Commands:\n1d4\n!help");
+                e.Channel.SendMessage(e.User.Mention + "Commands:\n!help\n!roll XdY+Z");
             }
 
 
 
 
-            if (e.Message.Text.Contains ("roll "))
+            if (e.Message.Text.Contains ("!roll "))
             {
-                
+
+
+
+
+
+
+
+
                 string text = e.Message.Text;
 
-                text = text.Replace("roll ", "");
+                text = text.Replace("!roll ", "");
 
 
-                char[] delimiterChars = { 'd', ' ' };
+                char[] delimiterChars = { 'd', '+' };
+
+
 
 
 //                e.Channel.SendMessage("Original text: " + text);
 
                 string[] words = text.Split(delimiterChars);
-//                e.Channel.SendMessage("numbers in roll:" + words.Length);
+                //                e.Channel.SendMessage("numbers in roll:" + words.Length);
+                if (text)
+
+                int mod = 0;
+                int[] DieArray;
+                DieArray = new int[3];
+                DieArray[0] = 0;
+                DieArray[1] = 0;
+                DieArray[2] = 0;
+
+                DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
+
+
+                if (e.Message.Text.Contains("+"))
+                {
+                    mod = 0;
+                    if (DieArray[2] != 0)
+                    {
+                        mod = mod + DieArray[2];
+                    }
+                }
+                if (DieArray[1] == 0)
+                {
+                    return;
+                }
 
 
 
 
-                int[] DieArray = text.Split('d').Select(str => int.Parse(str)).ToArray();
+                var index = Array.FindIndex(DieArray, x => x == 2);
                 Console.WriteLine(text);
                 if (DieArray[1] > 1000)
                     DieArray[1] = 1000;
@@ -67,16 +101,30 @@ namespace DiscordBot_01
 
 
 
+
                 for (int i = 0; i < DieArray[0]; ++i)
                 {
                     Random rnd = new Random();
                     DiceRoll var = new DiscordBot_01.DiceRoll();
-                    e.Channel.SendMessage("Rolled .. " + rnd.Next(1, DieArray[1] + 1));
 
+                    int roll = rnd.Next(1, DieArray[1] + 1);
+
+                    
+                    int total = roll + mod;
+                    if (mod == 0)
+                    {
+                        e.Channel.SendMessage("Rolled .. " + roll );
+                    }
+                    else
+                    e.Channel.SendMessage("Rolled .. " + roll + " + " + mod + " = " + total);
+ 
+                    
+                    
+                    
                     
                 }
 
-//              e.Channel.SendMessage(DieString[1]);
+             // e.Channel.SendMessage(DieString[2]);
 
 
 
