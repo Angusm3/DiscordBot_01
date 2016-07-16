@@ -21,3 +21,15 @@ C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBo
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.dll
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\RollGen.Domain.dll
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.exe.config
+F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.exe
+F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.pdb
+F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.exe
+F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.pdb
+F:\%Hayle\DiscordBot_01\bin\Debug\Newtonsoft.Json.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Ninject.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.Concurrent.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.Enlightenment.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\RestSharp.xml
+F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.csprojResolveAssemblyReference.cache

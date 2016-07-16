@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//namespace DiscordBot_01
-public static void Main
+namespace DiscordBot_01
+
 {
     class DiceRoll
 
@@ -19,16 +19,9 @@ public static void Main
         //        int month = rnd.Next(1, 13);
         //       Random rnd = new Random();
 
-        public static int OneDieFour;
+        public static int OneDieFour = 1;
 
         Random rnd = new Random();
-        int x = OneDieFour;
-        int y = rnd.Next(1, 5);
-        
-
-        
-
-
 
     }
     
