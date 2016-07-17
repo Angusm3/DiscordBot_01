@@ -51,11 +51,16 @@ namespace DiscordBot_01
 
                 string text = e.Message.Text;
 
-                text = text.Replace("roll ", "");
-                if (Regex text = new Regex(@"\(\d{3}\)\d{3}-\d{4}"))
-                {
+ //               Regex DieTest = new Regex("(roll[0 - 9]d[0 - 9] +)");
+//
+//                Console.WriteLine("{0} {1} a valid die.",
+//                           text,
+//                           DieTest.IsMatch(text) ? "is" : "is not");
 
-                }
+
+
+                text = text.Replace("roll ", "");
+
 
 
                 char[] DieList = { 'd', '+' };
@@ -63,7 +68,7 @@ namespace DiscordBot_01
 
 
 
-//                e.Channel.SendMessage("Original text: " + text);
+                //                e.Channel.SendMessage("Original text: " + text);
 
                 string[] words = text.Split(DieList);
 //                e.Channel.SendMessage("numbers in roll:" + words.Length);
@@ -75,22 +80,30 @@ namespace DiscordBot_01
                 DieArray[0] = 0;
                 DieArray[1] = 0;
                 DieArray[2] = 0;
-
-                DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
-
-
-                if (e.Message.Text.Contains("+"))
+                try
                 {
-                    mod = 0;
-                    if (DieArray[2] != 0)
+                    DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
+                }
+                catch(FormatException)
+                {
+ //                   e.Channel.SendMessage("invalid die");
+                        return;
+                }
+
+                try
+                {
+                    if (e.Message.Text.Contains("+"))
                     {
-                        mod = mod + DieArray[2];
+                        mod = 0;
+                        if (DieArray[2] != 0)
+                        {
+                            mod = mod + DieArray[2];
+                        }
                     }
-                }
-                if (DieArray[1] == 0)
-                {
-                    return;
-                }
+                    if (DieArray[1] == 0)
+                    {
+                        return;
+                    }
 
 
 
@@ -99,31 +112,49 @@ namespace DiscordBot_01
                 Console.WriteLine(text);
                 if (DieArray[1] > 1000)
                     DieArray[1] = 1000;
+                if (DieArray[0] > 10)
+                    DieArray[0] = 10;
+                }
+                catch (IndexOutOfRangeException)
+                {
+ //                   e.Channel.SendMessage("invalid die");
+                    return;
+                }
 
                 string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
+                if (mod == 0)
+                {
+                    e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1]);
+                }
+                else
+                    e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2]);
 
-                e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1]);
 
-
-
+                Random rnd = new Random();
 
 
                 for (int i = 0; i < DieArray[0]; ++i)
                 {
-                    Random rnd = new Random();
+
                     DiceRoll var = new DiscordBot_01.DiceRoll();
-
-                    int roll = rnd.Next(1, DieArray[1] + 1);
-
-                    
-                    int total = roll + mod;
-                    if (mod == 0)
+                    try
                     {
-                        e.Channel.SendMessage("Rolled .. " + roll );
+                        int roll = rnd.Next(1, DieArray[1] + 1);
+
+
+                        int total = roll + mod;
+                        if (mod == 0)
+                        {
+                            e.Channel.SendMessage("Rolled .. " + roll);
+                        }
+                        else
+                            e.Channel.SendMessage("Rolled .. " + roll + " + " + mod + " = " + total);
                     }
-                    else
-                    e.Channel.SendMessage("Rolled .. " + roll + " + " + mod + " = " + total);
- 
+                    catch(ArgumentOutOfRangeException)
+                    {
+                        e.Channel.SendMessage("bby pls");
+                        return;
+                    }
                     
                     
                     
@@ -137,6 +168,9 @@ namespace DiscordBot_01
 
 
             }
+
+
+
             if (e.Message.Text == "!reaction")
             {
                 e.Channel.SendMessage("http://i.imgur.com/0SZIUqA.gif");
