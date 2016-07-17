@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace DiscordBot_01
 {
@@ -37,7 +38,8 @@ namespace DiscordBot_01
 
 
 
-            if (e.Message.Text.Contains ("!roll "))
+            if (e.Message.Text.Contains ("roll "))
+                
             {
 
 
@@ -49,19 +51,23 @@ namespace DiscordBot_01
 
                 string text = e.Message.Text;
 
-                text = text.Replace("!roll ", "");
+                text = text.Replace("roll ", "");
+                if (Regex text = new Regex(@"\(\d{3}\)\d{3}-\d{4}"))
+                {
+
+                }
 
 
-                char[] delimiterChars = { 'd', '+' };
+                char[] DieList = { 'd', '+' };
 
 
 
 
 //                e.Channel.SendMessage("Original text: " + text);
 
-                string[] words = text.Split(delimiterChars);
-                //                e.Channel.SendMessage("numbers in roll:" + words.Length);
-                if (text)
+                string[] words = text.Split(DieList);
+//                e.Channel.SendMessage("numbers in roll:" + words.Length);
+
 
                 int mod = 0;
                 int[] DieArray;
