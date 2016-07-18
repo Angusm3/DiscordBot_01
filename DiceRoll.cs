@@ -14,14 +14,9 @@ namespace DiscordBot_01
 
 
     {
-        //       var standardRoll = dice.Roll(3).d6();
+        //public static int OneDieFour = 1;
+
         //Random rnd = new Random();
-        //        int month = rnd.Next(1, 13);
-        //       Random rnd = new Random();
-
-        public static int OneDieFour = 1;
-
-        Random rnd = new Random();
 
     }
     

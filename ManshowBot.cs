@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Discord.Audio;
-
+using System.Net;
+using System.Globalization;
 
 namespace DiscordBot_01
 {
@@ -60,6 +61,39 @@ namespace DiscordBot_01
             }
 
 
+            if (e.Message.Text.StartsWith("wiki "))
+            {
+                string text = e.Message.Text;
+                text = text.Replace("wiki ", "");
+                TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+
+
+
+
+
+
+                string text2 = ("http://www.dandwiki.com/wiki/SRD:" + myTI.ToTitleCase(text));
+
+
+
+
+
+
+                text2 = text2.Replace(" ", "_");
+                text2 = text2.Replace("Of", "of");
+
+
+                e.Channel.SendMessage(text2);
+
+
+                //e.Channel.SendMessage(text);
+
+
+
+
+
+
+            }
 
 
 
@@ -71,8 +105,7 @@ namespace DiscordBot_01
 
 
 
-
-            if (e.Message.Text.Contains ("roll "))
+            if (e.Message.Text.StartsWith("roll "))
                 
             {
 
@@ -218,7 +251,7 @@ namespace DiscordBot_01
 
                     catch (ArgumentOutOfRangeException)
                     {
-                        e.Channel.SendMessage("bby pls " + DieArray[1] + " is not a die");
+                        e.Channel.SendMessage("pesky bee! " + DieArray[1] + " is not a die!");
                         return;
                     }
 
