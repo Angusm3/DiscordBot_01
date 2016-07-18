@@ -60,43 +60,129 @@ namespace DiscordBot_01
                 //IAudioClient.Join(bot);
             }
 
+            if (e.Message.Text.EndsWith("dour?"))
+            {
+                e.Channel.SendMessage("Of course Sir.");
+            }
+            if (e.Message.Text.Contains("Pompadour"))
+            {
+                e.Channel.SendMessage("You rang?");
+            }
+
+
+
+
+
 
             if (e.Message.Text.StartsWith("wiki "))
             {
-                string text = e.Message.Text;
-                text = text.Replace("wiki ", "");
                 TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+                string text = e.Message.Text;
+                text = text.Replace("wiki ", "srd");
 
 
+                if (text.StartsWith("srd5e "))
+                {
+                    text = text.Replace("srd5e ", "");
+                    string text5e = ("http://www.dandwiki.com/wiki/5e_SRD:" + myTI.ToTitleCase(text));
 
+                    text5e = text5e.Replace("E" + " ", "e" + " ");
+                    text5e = text5e.Replace(" ", "_");
+                    text5e = text5e.Replace("Of", "of");
+                    text5e = text5e.Replace("The", "the");
 
+                    e.Channel.SendMessage(text5e);
+                }
+                else if (text.StartsWith("srd4e"))
+                {
+                    text = text.Replace("srd4e", "");
+                    string text4e = ("http://www.dandwiki.com/wiki/4e_Homebrew" + myTI.ToTitleCase(text));
 
+                    text4e = text4e.Replace("E" + " ", "e" + " ");
+                    text4e = text4e.Replace(" ", "_");
+                    text4e = text4e.Replace("Of", "of");
+                    text4e = text4e.Replace("The", "the");
 
-                string text2 = ("http://www.dandwiki.com/wiki/SRD:" + myTI.ToTitleCase(text));
+                    e.Channel.SendMessage(text4e);
+                }
+                else if (text.StartsWith("srd3.5e "))
+                {
+                    text = text.Replace("srd3.5e ", "");
+                    string text35e = ("http://www.dandwiki.com/wiki/" + myTI.ToTitleCase(text) + "_(3.5e_Class)");
 
+                    text35e = text35e.Replace("E" + " ", "e" + " ");
+                    text35e = text35e.Replace(" ", "_");
+                    text35e = text35e.Replace("Of", "of");
+                    text35e = text35e.Replace("The", "the");
 
+                    e.Channel.SendMessage(text35e);
+                }
+                else if (text.StartsWith("srd"))
+                {
+                    text = text.Replace("srd", "");
+                    string textsrd = ("http://www.dandwiki.com/wiki/SRD:" + myTI.ToTitleCase(text));
 
+                    textsrd = textsrd.Replace("E" + " ", "e" + " ");
+                    textsrd = textsrd.Replace(" ", "_");
+                    textsrd = textsrd.Replace("Of", "of");
+                    textsrd = textsrd.Replace("The", "the");
 
-
-
-                text2 = text2.Replace(" ", "_");
-                text2 = text2.Replace("Of", "of");
-
-
-                e.Channel.SendMessage(text2);
-
-
-                //e.Channel.SendMessage(text);
-
-
+                    e.Channel.SendMessage(textsrd);
+                }
 
 
 
 
             }
 
+            //if (e.Message.Text.StartsWith("list"))
+            //{
+            //    string text = e.messa
+            //}
+
+            if (e.Message.Text.StartsWith("PClist"))
+            {
+                string text = e.Message.Text;
+
+                if (text.EndsWith("PClist"))
+                {
+                    e.Channel.SendMessage("Pompadour");
+                    e.Channel.SendMessage("Suzie");
+                    e.Channel.SendMessage("Valyr");
+                    e.Channel.SendMessage("Freidrich");
+                    e.Channel.SendMessage("Grimm");
+                }
 
 
+                text = text.Replace("PClist", "");
+                text = text.Replace(" ", "");
+
+                if (text.StartsWith("Pompadour"))
+                {
+                    e.Channel.SendMessage("https://docs.google.com/document/d/1fweHOOAdBHhP41BeLmouRmlhVRSTiS2mHjxovaeWO6M/edit");
+                }
+                else if (text.StartsWith("Suzie"))
+                {
+                    e.Channel.SendMessage("https://docs.google.com/document/d/1tEPd1eFeoLDIsS7MWlp2zt5EthLtBGImXzpnROPzQtE/edit");
+                }
+                else if (text.StartsWith("Valyr"))
+                {
+                    e.Channel.SendMessage("https://docs.google.com/document/d/1beXrXt5AW4snbSUgcO4SH3kRo3xYqGlo8MWryDM5M-A/edit");
+                }
+                else if (text.StartsWith("Freidrich"))
+                {
+                    e.Channel.SendMessage("https://docs.google.com/document/d/1CIouYRPvT_CVMYwR2XL4tn4MD_6OUNS7X3uJzoTh_Is/edit");
+                }
+                else if (text.StartsWith("Grimm"))
+                {
+                    e.Channel.SendMessage("https://docs.google.com/document/d/19N5DjpWPbiAha0n8nkYdXoayzrHh-3xI1f0-DgrpBR0/edit");
+                }
+
+                
+                
+                
+
+            }
 
 
 
