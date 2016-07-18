@@ -33,3 +33,17 @@ F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.Concurrent.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.Enlightenment.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\RestSharp.xml
 F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.csprojResolveAssemblyReference.cache
+F:\%Hayle\DiscordBot_01\bin\Debug\Discord.Net.Audio.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.Core.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\log4net.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\Zlib.Portable.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.pdb
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.Core.pdb
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.Core.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.pdb
+F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\log4net.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Zlib.Portable.xml
