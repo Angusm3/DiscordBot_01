@@ -37,7 +37,7 @@ namespace DiscordBot_01
 
 
 
-
+        
 
 
 
@@ -55,10 +55,41 @@ namespace DiscordBot_01
                 e.Channel.SendMessage("https://www.youtube.com/watch?v=3-0mdbo0Xo0");
             }
 
+
+
+
+
             if(e.Message.Text == "!start voice")
             {
-                //IAudioClient.Join(bot);
+                try
+                {
+
+                    bot.ExecuteAndWait(async () =>
+                    {
+                        bot.UsingAudio(x =>
+                        {
+                            x.Mode = AudioMode.Outgoing;
+                        });
+                        var VoiceChannel = bot.FindServers("Manshow 2X").FirstOrDefault().VoiceChannels.FirstOrDefault();
+                        var vbot = await bot.GetService<AudioService>()
+                            .Join(VoiceChannel);
+
+                    });
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine("NullReferenceException");
+                }
             }
+            if (e.Message.Text == "!stop voice")
+            {
+                return;
+            }
+
+
+
+
+
 
             if (e.Message.Text.EndsWith("dour?"))
             {

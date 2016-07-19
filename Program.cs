@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Discord.Audio;
+using System.Net;
+using System.Globalization;
 
 
 namespace DiscordBot_01
