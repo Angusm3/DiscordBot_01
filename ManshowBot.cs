@@ -64,7 +64,7 @@ namespace DiscordBot_01
             {
                 e.Channel.SendMessage("Of course Sir.");
             }
-            if (e.Message.Text.Contains("Pompadour"))
+            if (e.Message.Text.Contains("Pompadour "))
             {
                 e.Channel.SendMessage("You rang?");
             }
@@ -187,7 +187,10 @@ namespace DiscordBot_01
 
 
 
-
+            if (e.Message.Text.Contains("y tho"))
+            {
+                e.Channel.SendMessage("http://i.imgur.com/yNlQWRM.jpg");
+            }
 
 
 
@@ -195,172 +198,240 @@ namespace DiscordBot_01
                 
             {
 
-
-
-
-
-
-
-
                 string text = e.Message.Text;
-
- //               Regex DieTest = new Regex("(roll[0 - 9]d[0 - 9] +)");
-//
-//                Console.WriteLine("{0} {1} a valid die.",
-//                           text,
-//                           DieTest.IsMatch(text) ? "is" : "is not");
-
-
-
                 text = text.Replace("roll ", "");
 
 
 
-                char[] DieList = { 'd', '+' };
-
-
-
-
-                //                e.Channel.SendMessage("Original text: " + text);
-
-                string[] words = text.Split(DieList);
-//                e.Channel.SendMessage("numbers in roll:" + words.Length);
-
-
-                int mod = 0;
-                int[] DieArray;
-                DieArray = new int[3];
-                DieArray[0] = 0;
-                DieArray[1] = 0;
-                DieArray[2] = 0;
-                try
+                if (text.Contains("k"))
                 {
-                    DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
-                }
-                catch(FormatException)
-                {
- //                   e.Channel.SendMessage("invalid die");
-                        return;
-                }
+                    char[] KeepList = { 'd', 'k' };
 
-                try
-                {
-                    if (e.Message.Text.Contains("+"))
+                    string[] words2 = text.Split(KeepList);
+
+                    int[] DieArray = new int[3];
+                    DieArray[0] = 0;
+                    DieArray[1] = 0;
+                    DieArray[2] = 0;
+                    try
                     {
-                        mod = 0;
-                        if (DieArray[2] != 0)
+                        DieArray = text.Split('d', 'k').Select(str => int.Parse(str)).ToArray();
+                    }
+                    catch (FormatException)
+                    {
+                        //                   e.Channel.SendMessage("invalid die");
+                        return;
+                    }
+                    string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
+                    e.Channel.SendMessage("Rolling KeepDice Function ..  Amount .. " + DieString[0] + " |Die ..  " + DieString[1] + " |Keep .. " + DieString[2]);
+
+                    int Die = DieArray[0];
+                    int Roll = DieArray[1];
+                    int Keep = DieArray[2];
+
+
+
+                    Random rnd = new Random();
+                    int[] DieResult = new int[Die];
+                    try
+                    {
+                        for (int i = 0; i < Die; ++i)
                         {
-                            mod = mod + DieArray[2];
+                            int Result = rnd.Next(1, DieArray[1] + 1);
+                            DieResult[i] = Result;
+
                         }
                     }
-                    if (DieArray[1] == 0)
+                    catch (ArgumentOutOfRangeException)
                     {
                         return;
                     }
 
+                    foreach (int Element in DieResult)
+                    {
+                        string ElementString = Element.ToString();
+                        e.Channel.SendMessage(ElementString);
+                    }
 
 
 
-                var index = Array.FindIndex(DieArray, x => x == 2);
-                Console.WriteLine(text);
-                if (DieArray[1] > 1000)
-                    DieArray[1] = 1000;
-                if (DieArray[0] > 10)
-                    DieArray[0] = 10;
+                    int KeepSum = 0;
+                    Array.Sort(DieResult);
+                    Array.Reverse(DieResult);
+                    for (int i = 0; i < Keep; ++i)
+                    {
+                        try
+                        {
+                            e.Channel.SendMessage(".." + DieResult[i]);
+
+                            KeepSum = KeepSum + DieResult[i];
+                        }
+                        catch (IndexOutOfRangeException)
+                        {
+                            break;
+                        }
+
+
+                    }
+
+                    e.Channel.SendMessage("Sum.. " + KeepSum);
+
+
+
+
                 }
-                catch (IndexOutOfRangeException)
-                {
- //                   e.Channel.SendMessage("invalid die");
-                    return;
-                }
-
-                string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
-                if (mod == 0)
-                {
-                    e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1]);
-                }
-                else if (mod > 0)
-                {
-                    e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2]);
-                }
 
 
+
+
+                else
                     
-
-
-
-                Random rnd = new Random();
-
-                int rollSum = 0;
-                int total = 0;
-                int ismodified = 0;
-                int ismultiple = 0;
-                for (int i = 0; i < DieArray[0]; ++i)
                 {
+                    char[] DieList = { 'd', '+' };
+
+                    string[] words = text.Split(DieList);
+                    //                e.Channel.SendMessage("numbers in roll:" + words.Length);
+
+
+                    int mod = 0;
+                    int[] DieArray;
+                    DieArray = new int[3];
+                    DieArray[0] = 0;
+                    DieArray[1] = 0;
+                    DieArray[2] = 0;
+                    try
+                    {
+                        DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
+                    }
+                    catch (FormatException)
+                    {
+                        //                   e.Channel.SendMessage("invalid die");
+                        return;
+                    }
+
 
 
                     try
                     {
-                        int roll = rnd.Next(1, DieArray[1] + 1);
-
-
-                        total = roll + mod;
-                        if (DieArray[0] == 1 && mod == 0)
+                        if (e.Message.Text.Contains("+"))
                         {
-                            e.Channel.SendMessage("Rolled 1 die .. " + roll);
-                            ismodified = 0;
-                            ismultiple = 0;
+                            mod = 0;
+                            if (DieArray[2] != 0)
+                            {
+                                mod = mod + DieArray[2];
+                            }
                         }
-                        else if (DieArray[0] == 1 && mod > 0)
+                        if (DieArray[1] == 0)
                         {
-                            rollSum = rollSum + roll;
-                            e.Channel.SendMessage("Rolled single modified die .. " + roll);
-                            ismodified = 1;
-                            ismultiple = 0;
-                        }
-                        else if (DieArray[0] > 1 && mod > 0)
-                        {
-                            rollSum = rollSum + roll;
-                            e.Channel.SendMessage("Rolled multiple modified dice .. " + roll);
-                            ismodified = 1;
-                            ismultiple = 1;
-                        }
-                        else if (DieArray[0] > 1 && mod == 0)
-                        {
-
-                            e.Channel.SendMessage("Rolled multiple dice .. " + roll);
-                            ismodified = 0;
-                            ismultiple = 1;
+                            return;
                         }
 
+
+
+
+                        var index = Array.FindIndex(DieArray, x => x == 2);
+                        Console.WriteLine(text);
+                        if (DieArray[1] > 1000)
+                            DieArray[1] = 1000;
+                        if (DieArray[0] > 10)
+                            DieArray[0] = 10;
                     }
-
-                    catch (ArgumentOutOfRangeException)
+                    catch (IndexOutOfRangeException)
                     {
-                        e.Channel.SendMessage("pesky bee! " + DieArray[1] + " is not a die!");
+                        //                   e.Channel.SendMessage("invalid die");
                         return;
                     }
 
+                    string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
+                    if (mod == 0)
+                    {
+                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1]);
+                    }
+                    else if (mod > 0)
+                    {
+                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2]);
+                    }
 
 
 
+
+
+
+                    Random rnd = new Random();
+
+                    int rollSum = 0;
+                    int total = 0;
+                    int ismodified = 0;
+                    int ismultiple = 0;
+                    for (int i = 0; i < DieArray[0]; ++i)
+                    {
+
+
+                        try
+                        {
+                            int roll = rnd.Next(1, DieArray[1] + 1);
+
+
+                            total = roll + mod;
+                            if (DieArray[0] == 1 && mod == 0)
+                            {
+                                e.Channel.SendMessage("Rolled 1 die .. " + roll);
+                                ismodified = 0;
+                                ismultiple = 0;
+                            }
+                            else if (DieArray[0] == 1 && mod > 0)
+                            {
+                                rollSum = rollSum + roll;
+                                e.Channel.SendMessage("Rolled single modified die .. " + roll);
+                                ismodified = 1;
+                                ismultiple = 0;
+                            }
+                            else if (DieArray[0] > 1 && mod > 0)
+                            {
+                                rollSum = rollSum + roll;
+                                e.Channel.SendMessage("Rolled multiple modified dice .. " + roll);
+                                ismodified = 1;
+                                ismultiple = 1;
+                            }
+                            else if (DieArray[0] > 1 && mod == 0)
+                            {
+
+                                e.Channel.SendMessage("Rolled multiple dice .. " + roll);
+                                ismodified = 0;
+                                ismultiple = 1;
+                            }
+
+                        }
+
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            e.Channel.SendMessage("pesky bee! " + DieArray[1] + " is not a die!");
+                            return;
+                        }
+
+
+
+
+                    }
+
+
+                    if (ismodified == 1 && ismultiple == 1)
+                    {
+                        int rollTotal = rollSum + mod;
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollTotal);
+                    }
+                    else if (ismodified == 1 && ismultiple == 0)
+                    {
+                        rollSum = total;
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollSum);
+                    }
+                    else if (ismodified == 0)
+                    {
+                        return;
+                    }
                 }
 
 
-                if (ismodified == 1 && ismultiple == 1)
-                {
-                    int rollTotal = rollSum + mod;
-                    e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollTotal);
-                }
-                else if (ismodified == 1 && ismultiple == 0)
-                {
-                    rollSum = total;
-                    e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollSum);
-                }
-                else if (ismodified == 0)
-                {
-                    return;
-                }
 
                 // e.Channel.SendMessage(DieString[2]);
 
