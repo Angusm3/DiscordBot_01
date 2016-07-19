@@ -223,7 +223,7 @@ namespace DiscordBot_01
                         return;
                     }
                     string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
-                    e.Channel.SendMessage("Rolling KeepDice Function ..  Amount .. " + DieString[0] + " |Die ..  " + DieString[1] + " |Keep .. " + DieString[2]);
+                    //e.Channel.SendMessage("Rolling KeepDice Function ..  Amount .. " + DieString[0] + " |Die ..  " + DieString[1] + " |Keep .. " + DieString[2]);
 
                     int Die = DieArray[0];
                     int Roll = DieArray[1];
@@ -262,8 +262,6 @@ namespace DiscordBot_01
                     {
                         try
                         {
-                            e.Channel.SendMessage(".." + DieResult[i]);
-
                             KeepSum = KeepSum + DieResult[i];
                         }
                         catch (IndexOutOfRangeException)
@@ -274,7 +272,7 @@ namespace DiscordBot_01
 
                     }
 
-                    e.Channel.SendMessage("Sum.. " + KeepSum);
+                    e.Channel.SendMessage("Keeping (" + Keep + ") Sum.. " + KeepSum);
 
 
 
