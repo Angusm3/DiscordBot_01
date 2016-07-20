@@ -1,5 +1,6 @@
 ﻿using Discord;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,11 @@ using System.Text.RegularExpressions;
 using Discord.Audio;
 using System.Net;
 using System.Globalization;
+using NAudio;
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
+
+
 
 namespace DiscordBot_01
 {
@@ -22,6 +28,8 @@ namespace DiscordBot_01
 
 
 
+
+
             bot.ExecuteAndWait(async () =>
             {
                 bot.MessageReceived += Bot_MessageReceived;
@@ -29,9 +37,19 @@ namespace DiscordBot_01
 
 
 
+                
+                //bot.UsingAudio(x =>
+                //{
+                //    x.Mode = AudioMode.Outgoing;
+                //});
+                //var VoiceChannel = bot.FindServers("Manshow 2X").FirstOrDefault().VoiceChannels.FirstOrDefault();
+                //var vbot = await bot.GetService<AudioService>()
+                //    .Join(VoiceChannel);
 
 
             });
+
+
         }
 
 
@@ -41,49 +59,116 @@ namespace DiscordBot_01
 
 
 
-        private void Bot_MessageReceived(object sender, MessageEventArgs e)
+        public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
             if (e.Message.IsAuthor) return;
 
-            if(e.Message.Text == "!help")
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //Characters
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
+
+
+
+            if (e.Message.Text.StartsWith("PC "))
             {
-                e.Channel.SendMessage(e.User.Mention + "Commands:\n!help\n!roll XdY+Z");
-            }
+                string path = @"Files\";
+                TextInfo Adjust = new CultureInfo("en-US", false).TextInfo;
+                string text = e.Message.Text;
+                text = text.Replace("PC ", "");
 
-            if(e.Message.Text == "gibnao")
-            {
-                e.Channel.SendMessage("https://www.youtube.com/watch?v=3-0mdbo0Xo0");
-            }
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Add
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                if (text.StartsWith("add "))
+                {
+                    text = text.Replace("add ", "");
 
 
 
 
 
-            if(e.Message.Text == "!start voice")
-            {
-                try
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    //Create
+                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    if (text.StartsWith("create "))
                 {
 
-                    bot.ExecuteAndWait(async () =>
+                    text = text.Replace("create ", "");
+                    string filename = Adjust.ToTitleCase(text);
+                    string newfile = path + filename + ".csv";
+                    if (File.Exists(path + filename + ".csv"))
                     {
-                        bot.UsingAudio(x =>
+                        e.Channel.SendMessage(text + " already exists");
+                    }
+                   else
+                    {
+                        e.Channel.SendMessage("Creating " + text + "...");
+                        try
                         {
-                            x.Mode = AudioMode.Outgoing;
-                        });
-                        var VoiceChannel = bot.FindServers("Manshow 2X").FirstOrDefault().VoiceChannels.FirstOrDefault();
-                        var vbot = await bot.GetService<AudioService>()
-                            .Join(VoiceChannel);
+                            using (FileStream fs = File.Create(newfile))
+                            {
+                                Byte[] info = new UTF8Encoding(true).GetBytes(text);
 
-                    });
+                                fs.Write(info, 0, info.Length);
+
+
+                                e.Channel.SendMessage("PC created .. " + filename);
+                            }
+                        }
+                        catch
+                        {
+                            e.Channel.SendMessage("error");
+                            return;
+                        }
+
+                    }
+
                 }
-                catch (NullReferenceException)
-                {
-                    Console.WriteLine("NullReferenceException");
-                }
-            }
-            if (e.Message.Text == "!stop voice")
-            {
-                return;
+
+
+
+
+
+
             }
 
 
@@ -91,19 +176,42 @@ namespace DiscordBot_01
 
 
 
-            if (e.Message.Text.EndsWith("dour?"))
-            {
-                e.Channel.SendMessage("Of course Sir.");
-            }
-            if (e.Message.Text.Contains("Pompadour "))
-            {
-                e.Channel.SendMessage("You rang?");
-            }
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //WIKI
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
 
             if (e.Message.Text.StartsWith("wiki "))
             {
@@ -165,11 +273,14 @@ namespace DiscordBot_01
 
 
             }
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //PCLIST
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
 
-            //if (e.Message.Text.StartsWith("list"))
-            //{
-            //    string text = e.messa
-            //}
 
             if (e.Message.Text.StartsWith("PClist"))
             {
@@ -215,15 +326,102 @@ namespace DiscordBot_01
 
             }
 
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //AI
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
+            string Name = e.User.Name;
 
 
 
-            if (e.Message.Text.Contains("y tho"))
+            if (e.Message.Text.StartsWith("Who "))
             {
-                e.Channel.SendMessage("http://i.imgur.com/yNlQWRM.jpg");
+                string text = e.Message.Text;
+                text = text.Replace("Who ", "");
+
+
+                    if (text.StartsWith("is "))
+                    {
+                        text = text.Replace("is ", "");
+                        if (text.Equals(Name))
+                        {
+                            e.Channel.SendMessage("You are " + Name);
+                        }
+                        else
+                        {
+                        //    string NickName = text;
+                            //e.Server.FindUsers(NickName, bool exactMatch = false);
+                        //public IEnumerable<User> FindUsers(string)
+                        //{
+
+                        //}
+
+
+                        //    e.Channel.SendMessage("User is " + NickName);
+
+                    }
+                }
+
+
+
+
+
+
+
+                    if (text.StartsWith("are "))
+                    {
+                        text = text.Replace("are ", "");
+                        e.Channel.SendMessage("Can I help you?");
+
+                    }
+
+
+                    if (text.StartsWith("am "))
+                    {
+                        text = text.Replace("am ", "");
+                        if (text.StartsWith("I"))
+                        {
+                            e.Channel.SendMessage("You are " + Name);
+                        }
+
+                }
+
             }
 
 
+
+
+
+
+
+
+
+
+
+            if (e.Message.Text.Equals("Pompadour"))
+            {
+                e.Channel.SendMessage("Can I help you?");
+
+            }
+
+
+
+
+
+
+
+
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //DICE
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
 
             if (e.Message.Text.StartsWith("roll "))
                 
@@ -284,8 +482,6 @@ namespace DiscordBot_01
                         e.Channel.SendMessage(ElementString);
                     }
 
-
-
                     int KeepSum = 0;
                     Array.Sort(DieResult);
                     Array.Reverse(DieResult);
@@ -299,19 +495,10 @@ namespace DiscordBot_01
                         {
                             break;
                         }
-
-
                     }
 
                     e.Channel.SendMessage("Keeping (" + Keep + ") Sum.. " + KeepSum);
-
-
-
-
                 }
-
-
-
 
                 else
                     
@@ -320,7 +507,6 @@ namespace DiscordBot_01
 
                     string[] words = text.Split(DieList);
                     //                e.Channel.SendMessage("numbers in roll:" + words.Length);
-
 
                     int mod = 0;
                     int[] DieArray;
@@ -338,8 +524,6 @@ namespace DiscordBot_01
                         return;
                     }
 
-
-
                     try
                     {
                         if (e.Message.Text.Contains("+"))
@@ -354,9 +538,6 @@ namespace DiscordBot_01
                         {
                             return;
                         }
-
-
-
 
                         var index = Array.FindIndex(DieArray, x => x == 2);
                         Console.WriteLine(text);
@@ -381,11 +562,6 @@ namespace DiscordBot_01
                         e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2]);
                     }
 
-
-
-
-
-
                     Random rnd = new Random();
 
                     int rollSum = 0;
@@ -394,12 +570,9 @@ namespace DiscordBot_01
                     int ismultiple = 0;
                     for (int i = 0; i < DieArray[0]; ++i)
                     {
-
-
                         try
                         {
                             int roll = rnd.Next(1, DieArray[1] + 1);
-
 
                             total = roll + mod;
                             if (DieArray[0] == 1 && mod == 0)
@@ -429,18 +602,12 @@ namespace DiscordBot_01
                                 ismodified = 0;
                                 ismultiple = 1;
                             }
-
                         }
-
                         catch (ArgumentOutOfRangeException)
                         {
                             e.Channel.SendMessage("pesky bee! " + DieArray[1] + " is not a die!");
                             return;
                         }
-
-
-
-
                     }
 
 
@@ -461,22 +628,37 @@ namespace DiscordBot_01
                 }
 
 
-
-                // e.Channel.SendMessage(DieString[2]);
-
-
-
-
+                //-----------------------------------------------------------------------------------
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                //
+                //MISC
+                //
+                //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                //-----------------------------------------------------------------------------------
 
             }
 
+            if (e.Message.Text == "!help")
+            {
+                e.Channel.SendMessage(e.User.Mention + "Commands:\n!help\n!roll XdY+Z");
+            }
 
+            if (e.Message.Text == "gibnao")
+            {
+                e.Channel.SendMessage("https://www.youtube.com/watch?v=3-0mdbo0Xo0");
+            }
 
             if (e.Message.Text == "!reaction")
             {
                 e.Channel.SendMessage("http://i.imgur.com/0SZIUqA.gif");
             }
-
+            if (e.Message.Text.Contains("y tho"))
+            {
+                e.Channel.SendMessage("http://i.imgur.com/yNlQWRM.jpg");
+            }
         }
     }
 }
+
+
+

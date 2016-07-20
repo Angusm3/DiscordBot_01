@@ -47,3 +47,5 @@ F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.pdb
 F:\%Hayle\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\log4net.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\Zlib.Portable.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\NAudio.dll
+F:\%Hayle\DiscordBot_01\bin\Debug\NAudio.xml

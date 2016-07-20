@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using Discord.Audio;
 using System.Net;
 using System.Globalization;
+using NAudio;
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
 
 
 namespace DiscordBot_01
@@ -18,10 +21,6 @@ namespace DiscordBot_01
         static void Main(string[] args)
         {
             ManshowBot bot = new DiscordBot_01.ManshowBot();
-
-
-
         }
     }
-
 }
