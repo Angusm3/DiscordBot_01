@@ -53,9 +53,20 @@ namespace DiscordBot_01
         }
 
 
+        public struct Data
+        {
+            public Data(int row, string title, string value)
+            {
+                IntegerData = row;
+                StringData = title;
+                StringData2 = value;
+            }
 
-
-        
+            public int IntegerData { get; private set; }
+            public string StringData { get; private set; }
+            public string StringData2 { get; private set; }
+        }
+        string LoadedFile = "Character not found";
 
 
 
@@ -67,7 +78,22 @@ namespace DiscordBot_01
             //-----------------------------------------------------------------------------------
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             //
-            //Characters
+            //HELP
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
+
+
+            if (e.Message.Text == "!help")
+            {
+                e.Channel.SendMessage(e.User.Mention + "\nCurrent Command List:\n!help\nroll XdY+Z or XdYkZ\nPClist\nPC *command*\nwiki |edition, if none leave out| *page name*\nPClist\n+ some hidden commands");
+            }
+
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //CHARACTERS
             //
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             //-----------------------------------------------------------------------------------
@@ -76,23 +102,335 @@ namespace DiscordBot_01
 
             if (e.Message.Text.StartsWith("PC "))
             {
-                string path = @"Files\";
-                TextInfo Adjust = new CultureInfo("en-US", false).TextInfo;
                 string text = e.Message.Text;
+
+                //if text contains 'change'  'add'  'whatever'  then string function then remove it and use function for string starts after finding name
+                //string function;
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Initializing files array profiles[]
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                string path = @"Files\";
+                int ProfileCount;
+
+                int q = 0;
+                var charfiles = Directory.EnumerateFiles(path, "*.*");
+                foreach (string currentFile in charfiles)
+                {
+                    string fileName = currentFile.Substring(path.Length);
+
+                    q += 1;
+                }
+
+                string[] profiles = new string[q];
+                q = 0;
+                foreach (string currentFile in charfiles)
+                {
+                    string fileName = currentFile.Substring(path.Length);
+                    profiles[q] = fileName;
+                    q += 1;
+                }
+
+                ProfileCount = profiles.Length;
+
+                for (int i = 0; i < ProfileCount; i++)
+                {
+                    profiles[i] = profiles[i].Replace(".csv", "");
+
+                }
+                string FileMessage = "";
+                for (int i = 0; i < ProfileCount; i++)
+                {
+
+                    if (text.Contains(profiles[i]))
+                    {
+
+                        LoadedFile = profiles[i];
+                        FileMessage = "Loaded .. ";
+
+                    }
+  
+                }
+
+
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //LoadedFile Exceptions
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                string NewFileMessage = FileMessage;
+                string NewLoadedFile = LoadedFile;
+                string CharacterName = LoadedFile;
+                if (text.Contains("list"))
+                {
+
+                    NewFileMessage = "";
+                    NewLoadedFile = "Character List:";
+                }
+                if (text.Contains("stats"))
+                {
+
+                    NewFileMessage = "";
+                    NewLoadedFile = "Stats for " + NewLoadedFile;
+                }
+
+                e.Channel.SendMessage(FileMessage + NewLoadedFile);
+
+
+
+
+
+
+
+
+                TextInfo Adjust = new CultureInfo("en-US", false).TextInfo;
+
                 text = text.Replace("PC ", "");
+
+
+                string[] Character =
+                {
+                    "Name", "level", "exp", "str", "int", "dex", "wis", "con", "cha"
+                };
+
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Stats
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                if (text.Contains("stats") && text.Contains(CharacterName))
+                {
+
+                    //===========================
+                    //Initializing File Read
+                    //===========================
+                    string[] CharacterFile = File.ReadAllLines(path + CharacterName + ".csv");
+                    foreach (string s in CharacterFile)
+                    {
+                        Console.WriteLine(s);
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    text = text.Replace("stats", "");
+                    text = text.Replace(" ", "");
+                    text = text.Replace(CharacterName, "");
+
+                    // name = 0, level = 1, exp = 2,
+
+                    string[] CharacterStats = new string[9];
+                    string CharacterText;
+                    int StatLine = 0;
+                    int StatTake = 1;
+                    int overflowstopper = 0;
+                    switch (text)
+                    {
+                        case "name":
+                                StatLine = 0;
+                            break;
+                        case "level":
+                            StatLine = 1;
+                            break;
+                        case "exp":
+                            StatLine = 2;
+                            break;
+                        case "":
+                            string CharacterTextAll = System.IO.File.ReadAllText(path + CharacterName + ".csv");
+                            e.Channel.SendMessage(CharacterTextAll);
+                            overflowstopper = 1;
+                            break;
+                    }
+
+
+                    CharacterText = System.IO.File.ReadLines(path + CharacterName + ".csv").Skip(StatLine).Take(StatTake).First();
+                    if (overflowstopper == 0)
+                    {
+                        e.Channel.SendMessage(CharacterText);
+                    }
+
+
+
+
+
+
+
+                    if (text.Contains("write"))
+                    {
+
+
+                        string FileName = path + CharacterName + ".csv";
+                        text = text.Replace("write", "");
+
+
+
+                        //NAME
+                        string NewName = "";
+                        if (text.Contains("name"))
+                        {
+                            NewName = text.Replace("name", "");
+                            text = text.Replace(NewName, "");
+                        }
+                        //LEVEL
+                        string NewLevel = "";
+                        if (text.Contains("level"))
+                        {
+                            NewLevel = text.Replace("level", "");
+                            text = text.Replace(NewLevel, "");
+                        }
+                        //EXP
+                        string NewExp = "";
+                        if (text.Contains("exp"))
+                        {
+                            NewExp = text.Replace("exp", "");
+                            text = text.Replace(NewExp, "");
+                        }
+                        //STR
+                        string NewStr = "";
+                        if (text.Contains("str"))
+                        {
+                            NewStr = text.Replace("str", "");
+                            text = text.Replace(NewStr, "");
+                        }
+                        //INT
+                        string NewInt = "";
+                        if (text.Contains("int"))
+                        {
+                            NewInt = text.Replace("int", "");
+                            text = text.Replace(NewInt, "");
+                        }
+                        //DEX
+                        string NewDex = "";
+                        if (text.Contains("dex"))
+                        {
+                            NewDex = text.Replace("dex", "");
+                            text = text.Replace(NewDex, "");
+                        }
+                        //WIS
+                        string NewWis = "";
+                        if (text.Contains("wis"))
+                        {
+                            NewWis = text.Replace("wis", "");
+                            text = text.Replace(NewWis, "");
+                        }
+                        //CON
+                        string NewCon = "";
+                        if (text.Contains("con"))
+                        {
+                            NewCon = text.Replace("con", "");
+                            text = text.Replace(NewCon, "");
+                        }
+                        //CHA
+                        string NewCha = "";
+                        if (text.Contains("cha"))
+                        {
+                            NewCha = text.Replace("cha", "");
+                            text = text.Replace(NewCha, "");
+                        }
+                        //e.Channel.SendMessage("current string .. " + text);
+
+
+
+                        switch (text)
+                        {
+                            case "name":
+
+                                CharacterFile[0] = "Name: " + NewName;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "level":
+                                CharacterFile[1] = "Level: " + NewLevel;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "exp":
+                                CharacterFile[2] = "Experience: " + NewExp;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "str":
+                                CharacterFile[3] = "Strength:      " + NewStr;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "int":
+                                CharacterFile[4] = "Intelligence:  " + NewInt;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "dex":
+                                CharacterFile[5] = "Dexterity:     " + NewDex;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "wis":
+                                CharacterFile[6] = "Wisdom:        " + NewWis;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "con":
+                                CharacterFile[7] = "Constitution:  " + NewCon;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                            case "cha":
+                                CharacterFile[8] = "Charisma:      " + NewCha;
+                                File.WriteAllLines(FileName, CharacterFile, Encoding.UTF8);
+                                break;
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 //Add
                 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 if (text.StartsWith("add "))
                 {
-                    text = text.Replace("add ", "");
+                    string filename = Adjust.ToLower(text);
+
+
+
+
+                }
 
 
 
 
 
 
+
+
+
+
+
+                if (text.Equals("list"))
+                {
+
+                    for (int i = 0; i < ProfileCount; i++)
+                    {
+                        profiles[i] = profiles[i].Replace(".csv", "");
+                        e.Channel.SendMessage(profiles[i]);
+
+                    }
                 }
 
 
@@ -118,22 +456,14 @@ namespace DiscordBot_01
 
 
 
-
-
-
-
-
-
-
-
-                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    //Create
-                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    if (text.StartsWith("create "))
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Create
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                if (text.StartsWith("create "))
                 {
 
                     text = text.Replace("create ", "");
-                    string filename = Adjust.ToTitleCase(text);
+                    string filename = Adjust.ToLower(text);
                     string newfile = path + filename + ".csv";
                     if (File.Exists(path + filename + ".csv"))
                     {
@@ -146,7 +476,7 @@ namespace DiscordBot_01
                         {
                             using (FileStream fs = File.Create(newfile))
                             {
-                                Byte[] info = new UTF8Encoding(true).GetBytes(text);
+                                Byte[] info = new UTF8Encoding(true).GetBytes("");
 
                                 fs.Write(info, 0, info.Length);
 
@@ -160,12 +490,29 @@ namespace DiscordBot_01
                             return;
                         }
 
+
+                        using (System.IO.StreamWriter file =
+                            new System.IO.StreamWriter(newfile))
+
+                        {
+                            foreach (string element in Character)
+                            {
+                                string estr = element.ToString();
+                                file.WriteLine(estr);
+                            }
+
+                        }
+
                     }
 
                 }
 
 
-
+                //foreach (int Element in DieResult)
+                //{
+                //    string ElementString = Element.ToString();
+                //    e.Channel.SendMessage(ElementString);
+                //}
 
 
 
@@ -288,11 +635,9 @@ namespace DiscordBot_01
 
                 if (text.EndsWith("PClist"))
                 {
-                    e.Channel.SendMessage("Pompadour");
-                    e.Channel.SendMessage("Suzie");
-                    e.Channel.SendMessage("Valyr");
-                    e.Channel.SendMessage("Freidrich");
-                    e.Channel.SendMessage("Grimm");
+                    e.Channel.SendMessage("PClist + Character Name");
+                    e.Channel.SendMessage("Pompadour\nSuzie\nValyr\nFreidrich\nGrimm");
+
                 }
 
 
@@ -333,7 +678,7 @@ namespace DiscordBot_01
             //
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             //-----------------------------------------------------------------------------------
-            string Name = e.User.Name;
+            string UserName = e.User.Name;
 
 
 
@@ -346,9 +691,9 @@ namespace DiscordBot_01
                     if (text.StartsWith("is "))
                     {
                         text = text.Replace("is ", "");
-                        if (text.Equals(Name))
+                        if (text.Equals(UserName))
                         {
-                            e.Channel.SendMessage("You are " + Name);
+                            e.Channel.SendMessage("You are " + UserName);
                         }
                         else
                         {
@@ -384,7 +729,7 @@ namespace DiscordBot_01
                         text = text.Replace("am ", "");
                         if (text.StartsWith("I"))
                         {
-                            e.Channel.SendMessage("You are " + Name);
+                            e.Channel.SendMessage("You are " + UserName);
                         }
 
                 }
@@ -638,10 +983,7 @@ namespace DiscordBot_01
 
             }
 
-            if (e.Message.Text == "!help")
-            {
-                e.Channel.SendMessage(e.User.Mention + "Commands:\n!help\n!roll XdY+Z");
-            }
+
 
             if (e.Message.Text == "gibnao")
             {
