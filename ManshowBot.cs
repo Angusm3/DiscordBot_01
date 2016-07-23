@@ -718,7 +718,51 @@ namespace DiscordBot_01
                 }
             }
 
-
+            if (e.User.Name == "Wedge")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "hikari")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "Finagin007")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
 
 
 
