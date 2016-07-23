@@ -13,6 +13,7 @@ using System.Globalization;
 using NAudio;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
+using System.Web;
 
 
 
@@ -37,7 +38,7 @@ namespace DiscordBot_01
 
 
 
-                
+
                 //bot.UsingAudio(x =>
                 //{
                 //    x.Mode = AudioMode.Outgoing;
@@ -172,8 +173,12 @@ namespace DiscordBot_01
                     NewFileMessage = "";
                     NewLoadedFile = "Stats for " + NewLoadedFile;
                 }
+                string FinalMessage = FileMessage + NewLoadedFile;
+                if (!(FinalMessage.Contains("Character")))
+                {
+                    e.Channel.SendMessage(FileMessage + NewLoadedFile);
+                }
 
-                e.Channel.SendMessage(FileMessage + NewLoadedFile);
 
 
 
@@ -680,6 +685,80 @@ namespace DiscordBot_01
             //-----------------------------------------------------------------------------------
             string UserName = e.User.Name;
 
+            if (e.User.Name == "Onee-chan")
+            {
+                //if (e.Message.Text.Contains("imgur"))
+                //{
+                //    return;
+                //}
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                text = text.Replace("@Onee-chan", "Old Man Pompadour");
+                e.Message.Delete();
+
+                e.Channel.SendMessage(text);
+            }
+
+
+
+
+            if (e.User.Name == "MinusVitaminC")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+
+
+
+
+
+            if (e.Message.Text.Contains(""))
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] outputline = File.ReadAllLines(path);
+                var poop = File.ReadAllLines(path).Length;
+
+
+
+                Random rnd = new Random();
+                int roll = rnd.Next(1, 20 + 1);
+                int roll2 = rnd.Next(1, poop + 1);
+                string output = "";
+
+
+                try
+                {
+                    if (roll == 1)
+                    {
+
+
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        e.Channel.SendMessage(outputline[roll2]);
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+            }
+
+
+
+
+
 
 
             if (e.Message.Text.StartsWith("Who "))
@@ -743,14 +822,6 @@ namespace DiscordBot_01
 
 
 
-
-
-
-            if (e.Message.Text.Equals("Pompadour"))
-            {
-                e.Channel.SendMessage("Can I help you?");
-
-            }
 
 
 
@@ -820,10 +891,11 @@ namespace DiscordBot_01
                     {
                         return;
                     }
+                    string ElementString = "";
 
                     foreach (int Element in DieResult)
                     {
-                        string ElementString = Element.ToString();
+                        ElementString = Element.ToString();
                         e.Channel.SendMessage(ElementString);
                     }
 
@@ -908,6 +980,7 @@ namespace DiscordBot_01
                     }
 
                     Random rnd = new Random();
+
 
                     int rollSum = 0;
                     int total = 0;
@@ -997,6 +1070,29 @@ namespace DiscordBot_01
             if (e.Message.Text.Contains("y tho"))
             {
                 e.Channel.SendMessage("http://i.imgur.com/yNlQWRM.jpg");
+            }
+            if (e.Message.Text.Contains("there is no need to be upset"))
+            {
+                e.Channel.SendMessage("http://i.imgur.com/Uyzdxlu.gif");
+            }
+            if (e.Message.Text.Contains("pepe"))
+            {
+                Random rnd = new Random();
+                var files = Directory.GetFiles(@"pepe\");
+                string image = files[rnd.Next(files.Length)];
+
+
+
+
+                e.Channel.SendFile(image);
+            }
+            if (e.Message.Text.Equals("salt"))
+            {
+                Random rnd = new Random();
+                var files = Directory.GetFiles(@"salt\");
+                string image = files[rnd.Next(files.Length)];
+                
+                e.Channel.SendFile(image);
             }
         }
     }

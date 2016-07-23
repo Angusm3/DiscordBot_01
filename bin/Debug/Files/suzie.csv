@@ -1,9 +1,9 @@
 Name
 level
 exp
-str
-int
-dex
-wis
-con
-cha
+Strength     21
+Intelligence 15
+Dexterity    23
+Wisdom       11
+Constitution 26
+Charisma     19
