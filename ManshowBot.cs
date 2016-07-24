@@ -1111,13 +1111,17 @@ namespace DiscordBot_01
             {
                 e.Channel.SendMessage("http://i.imgur.com/0SZIUqA.gif");
             }
-            if (e.Message.Text.Contains("y tho"))
+            if (e.Message.Text.Equals("y tho"))
             {
                 e.Channel.SendMessage("http://i.imgur.com/yNlQWRM.jpg");
             }
             if (e.Message.Text.Contains("there is no need to be upset"))
             {
                 e.Channel.SendMessage("http://i.imgur.com/Uyzdxlu.gif");
+            }
+            if (e.Message.Text.Contains("maximum over rustle"))
+            {
+                e.Channel.SendMessage("https://media.giphy.com/media/MvS6aL7FX0Iz6/giphy.gif");
             }
             if (e.Message.Text.Contains("pepe"))
             {
