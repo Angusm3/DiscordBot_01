@@ -1,0 +1,19 @@
+CompountStatementArray
+CoordinatingConjunctionArray
+SubordinatingConjunctionConcessionArray
+SubordinatingConjunctionConditionArray
+SubordinatingConjunctionComparisonArray
+SubordinatingConjunctionTimeArray
+SubordinatingConjunctionReasonArray
+SubordinatingConjunctionAdjectiveArray
+SubordinatingConjunctionPronounArray
+SubordinatingConjunctionMannerArray
+SubordinatingConjunctionPlaceArray
+CorrelativeConjunctionArray (2D Array)
+ConjunctiveAdverbAndArray
+ConjunctiveAdverbButArray
+ConjunctiveAdverbSoArray
+string[] SentenceType =
+{
+"interrogative", "declarative", "exclamatory", "imperative"
+};

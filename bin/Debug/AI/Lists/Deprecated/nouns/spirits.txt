@@ -1,0 +1,10 @@
+bourbon
+brandy
+gin
+liqueur
+rum
+scotch
+tequila
+vodka
+whiskey
+cognac

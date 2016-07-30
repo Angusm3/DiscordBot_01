@@ -1,0 +1,10 @@
+basic
+clear
+complex
+difficult
+direct
+easy
+hard
+obvious
+plain
+simple

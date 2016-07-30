@@ -1,0 +1,15 @@
+adagio
+allegro
+andante
+espressivo
+grandioso
+grave
+largo
+legato
+libretto
+moderato
+molto
+pizzicato
+presto
+staccato
+vibrato

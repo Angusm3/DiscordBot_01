@@ -238,23 +238,12 @@ namespace DiscordBot_01
                     int StatLine = 0;
                     int StatTake = 1;
                     int overflowstopper = 0;
-                    switch (text)
-                    {
-                        case "name":
-                                StatLine = 0;
-                            break;
-                        case "level":
-                            StatLine = 1;
-                            break;
-                        case "exp":
-                            StatLine = 2;
-                            break;
-                        case "":
+
                             string CharacterTextAll = System.IO.File.ReadAllText(path + CharacterName + ".csv");
                             e.Channel.SendMessage(CharacterTextAll);
                             overflowstopper = 1;
-                            break;
-                    }
+
+
 
 
                     CharacterText = System.IO.File.ReadLines(path + CharacterName + ".csv").Skip(StatLine).Take(StatTake).First();
@@ -395,27 +384,6 @@ namespace DiscordBot_01
 
 
 
-
-
-
-
-
-
-
-
-
-
-                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                //Add
-                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                if (text.StartsWith("add "))
-                {
-                    string filename = Adjust.ToLower(text);
-
-
-
-
-                }
 
 
 
@@ -676,188 +644,7 @@ namespace DiscordBot_01
 
             }
 
-            //-----------------------------------------------------------------------------------
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            //
-            //AI
-            //
-            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            //-----------------------------------------------------------------------------------
-            string UserName = e.User.Name;
-
-            if (e.User.Name == "Onee-chan")
-            {
-                //if (e.Message.Text.Contains("imgur"))
-                //{
-                //    return;
-                //}
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                text = text.Replace("@Onee-chan", "Old Man Pompadour");
-                e.Message.Delete();
-
-                e.Channel.SendMessage(text);
-            }
-
-
-
-
-            if (e.User.Name == "MinusVitaminC")
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] CharacterFile = File.ReadAllLines(path);
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                string[] AIfile = new string[1]
-                {
-                    text
-                };
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(text);
-                }
-            }
-
-            if (e.User.Name == "Wedge")
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] CharacterFile = File.ReadAllLines(path);
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                string[] AIfile = new string[1]
-                {
-                    text
-                };
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(text);
-                }
-            }
-            if (e.User.Name == "hikari")
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] CharacterFile = File.ReadAllLines(path);
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                string[] AIfile = new string[1]
-                {
-                    text
-                };
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(text);
-                }
-            }
-            if (e.User.Name == "Finagin007")
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] CharacterFile = File.ReadAllLines(path);
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                string[] AIfile = new string[1]
-                {
-                    text
-                };
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(text);
-                }
-            }
-
-
-
-
-
-
-            if (e.Message.Text.Contains(""))
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] outputline = File.ReadAllLines(path);
-                var poop = File.ReadAllLines(path).Length;
-
-
-
-                Random rnd = new Random();
-                int roll = rnd.Next(1, 20 + 1);
-                int roll2 = rnd.Next(1, poop + 1);
-                string output = "";
-
-
-                try
-                {
-                    if (roll == 1)
-                    {
-
-
-                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
-                        e.Channel.SendMessage(outputline[roll2]);
-                    }
-                }
-                catch
-                {
-                    return;
-                }
-            }
-
-
-
-
-
-
-
-            if (e.Message.Text.StartsWith("Who "))
-            {
-                string text = e.Message.Text;
-                text = text.Replace("Who ", "");
-
-
-                    if (text.StartsWith("is "))
-                    {
-                        text = text.Replace("is ", "");
-                        if (text.Equals(UserName))
-                        {
-                            e.Channel.SendMessage("You are " + UserName);
-                        }
-                        else
-                        {
-                        //    string NickName = text;
-                            //e.Server.FindUsers(NickName, bool exactMatch = false);
-                        //public IEnumerable<User> FindUsers(string)
-                        //{
-
-                        //}
-
-
-                        //    e.Channel.SendMessage("User is " + NickName);
-
-                    }
-                }
-
-
-
-
-
-
-
-                    if (text.StartsWith("are "))
-                    {
-                        text = text.Replace("are ", "");
-                        e.Channel.SendMessage("Can I help you?");
-
-                    }
-
-
-                    if (text.StartsWith("am "))
-                    {
-                        text = text.Replace("am ", "");
-                        if (text.StartsWith("I"))
-                        {
-                            e.Channel.SendMessage("You are " + UserName);
-                        }
-
-                }
-
-            }
+           
 
 
 
@@ -1039,28 +826,28 @@ namespace DiscordBot_01
                             total = roll + mod;
                             if (DieArray[0] == 1 && mod == 0)
                             {
-                                e.Channel.SendMessage("Rolled 1 die .. " + roll);
+                                e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 0;
                                 ismultiple = 0;
                             }
                             else if (DieArray[0] == 1 && mod > 0)
                             {
                                 rollSum = rollSum + roll;
-                                e.Channel.SendMessage("Rolled single modified die .. " + roll);
+                                e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 1;
                                 ismultiple = 0;
                             }
                             else if (DieArray[0] > 1 && mod > 0)
                             {
                                 rollSum = rollSum + roll;
-                                e.Channel.SendMessage("Rolled multiple modified dice .. " + roll);
+                                e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 1;
                                 ismultiple = 1;
                             }
                             else if (DieArray[0] > 1 && mod == 0)
                             {
 
-                                e.Channel.SendMessage("Rolled multiple dice .. " + roll);
+                                e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 0;
                                 ismultiple = 1;
                             }
@@ -1141,6 +928,138 @@ namespace DiscordBot_01
                 string image = files[rnd.Next(files.Length)];
                 
                 e.Channel.SendFile(image);
+            }
+
+            if (e.User.Name == "Onee-chan")
+            {
+                //if (e.Message.Text.Contains("imgur"))
+                //{
+                //    return;
+                //}
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                text = text.Replace("@Onee-chan", "Old Man Pompadour");
+                e.Message.Delete();
+
+                e.Channel.SendMessage(text);
+            }
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //Pompadour dumb ai
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
+
+
+            if (e.User.Name == "MinusVitaminC")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+            if (e.User.Name == "Wedge")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "hikari")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "Finagin007")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+
+
+
+
+
+
+            if (e.Message.Text.Contains(""))
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] outputline = File.ReadAllLines(path);
+                var poop = File.ReadAllLines(path).Length;
+
+
+
+                Random rnd = new Random();
+                int roll = rnd.Next(1, 20 + 1);
+                int roll2 = rnd.Next(1, poop + 1);
+                string output = "";
+
+
+                try
+                {
+                    if (roll == 1)
+                    {
+
+
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        e.Channel.SendMessage(outputline[roll2]);
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+
+
+
+                if (e.Message.Text.Equals("test"))
+                {
+                    string s = TestClass2.SharedString2();
+                    e.Channel.SendMessage(s);
+                }
             }
         }
     }

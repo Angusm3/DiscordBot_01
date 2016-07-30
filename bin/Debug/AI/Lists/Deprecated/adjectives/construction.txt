@@ -1,0 +1,17 @@
+beveled
+chamfered
+coped
+flashed
+flush
+inflammable
+insulated
+isometric
+joint
+knurled
+laminated
+level
+plumb
+radial
+soluble
+tempered
+warped

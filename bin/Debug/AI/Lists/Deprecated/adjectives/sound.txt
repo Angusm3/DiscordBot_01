@@ -1,0 +1,17 @@
+blaring
+booming
+deafening
+faint
+gentle
+grating
+hushed
+loud
+muffled
+mute
+noisy
+quiet
+roaring
+rowdy
+silent
+soft
+thundering
