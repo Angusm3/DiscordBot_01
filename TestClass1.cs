@@ -19,23 +19,24 @@ namespace DiscordBot_01
 {
     public class TestClass1
     {
+#pragma warning disable 0169
         private DiscordClient TC1;
+
+
 
         public TestClass1()
         {
-            TC1 = new DiscordClient();
 
-            //TC1.ExecuteAndWait(async () =>
-            //{
-                TC1.MessageReceived += Bot_MessageReceived;
-            //        await TC1.Connect("treeforge2.al@gmail.com", "superbotpassword");
-            //    });
         }
 
-        public void Bot_MessageReceived(object sender, MessageEventArgs e)
+
+        public string test1()
         {
-            e.Channel.SendMessage("sent message from test class 1");
-
+            return "woooords";
         }
+
+
+
+
     }
 }

@@ -1072,14 +1072,23 @@ namespace DiscordBot_01
                     return;
                 }
 
+                if (e.Message.Text.Contains("the best"))
+                {
+                    e.Channel.SendMessage("https://www.youtube.com/watch?v=5vRlJrkxsqo");
+                }
 
 
-
-                if (e.Message.Text.Equals("test"))
+                if (e.Message.Text.Equals("test2"))
                 {
                     string s = TestClass2.SharedString2();
                     e.Channel.SendMessage(s);
                 }
+
+
+
+
+
+
             }
         }
     }

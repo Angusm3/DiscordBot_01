@@ -38,7 +38,7 @@ namespace DiscordBot_01
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
-            e.Channel.SendMessage("sent message from test class 2");
+            e.Channel.SendMessage("SendMessage test2");
 
         }
     }
