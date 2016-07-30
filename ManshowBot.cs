@@ -791,8 +791,8 @@ namespace DiscordBot_01
                         Console.WriteLine(text);
                         if (DieArray[1] > 1000)
                             DieArray[1] = 1000;
-                        if (DieArray[0] > 10)
-                            DieArray[0] = 10;
+                        if (DieArray[0] > 500)
+                            DieArray[0] = 500;
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -812,20 +812,22 @@ namespace DiscordBot_01
 
                     Random rnd = new Random();
 
-
+                    int roll = 0;
                     int rollSum = 0;
                     int total = 0;
                     int ismodified = 0;
                     int ismultiple = 0;
+                    string DieOutput = "";
                     for (int i = 0; i < DieArray[0]; ++i)
                     {
                         try
                         {
-                            int roll = rnd.Next(1, DieArray[1] + 1);
+                            roll = rnd.Next(1, DieArray[1] + 1);
 
                             total = roll + mod;
                             if (DieArray[0] == 1 && mod == 0)
                             {
+
                                 e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 0;
                                 ismultiple = 0;
@@ -840,14 +842,16 @@ namespace DiscordBot_01
                             else if (DieArray[0] > 1 && mod > 0)
                             {
                                 rollSum = rollSum + roll;
-                                e.Channel.SendMessage("Rolled .. " + roll);
+                                DieOutput = DieOutput + roll + ", ";
+                                //e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 1;
                                 ismultiple = 1;
                             }
                             else if (DieArray[0] > 1 && mod == 0)
                             {
-
-                                e.Channel.SendMessage("Rolled .. " + roll);
+                                rollSum = rollSum + roll;
+                                DieOutput = DieOutput + roll + ", ";
+                                //e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 0;
                                 ismultiple = 1;
                             }
@@ -857,20 +861,36 @@ namespace DiscordBot_01
                             e.Channel.SendMessage("pesky bee! " + DieArray[1] + " is not a die!");
                             return;
                         }
-                    }
 
+                    }
+                    try
+                    {
+                        if (DieOutput.EndsWith(","))
+                        {
+                            DieOutput = DieOutput.Remove(DieOutput.Length - 1);
+                        }
+                        e.Channel.SendMessage(DieOutput);
+                    }
+                    catch
+                    {
+
+                    }
 
                     if (ismodified == 1 && ismultiple == 1)
                     {
                         int rollTotal = rollSum + mod;
-                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollTotal);
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + "(" + rollSum + ")" + " + " + DieArray[2] + " = " + rollTotal);
                     }
                     else if (ismodified == 1 && ismultiple == 0)
                     {
                         rollSum = total;
                         e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollSum);
                     }
-                    else if (ismodified == 0)
+                    else if (ismodified == 0 && ismultiple == 1)
+                    {
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " = " + rollSum);
+                    }
+                    else if (ismodified == 0 && ismultiple == 0)
                     {
                         return;
                     }

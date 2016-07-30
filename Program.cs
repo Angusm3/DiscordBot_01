@@ -20,9 +20,9 @@ namespace DiscordBot_01
     {
         static void Main(string[] args)
         {
-
-            Pompadour AI = new DiscordBot_01.Pompadour();
             ManshowBot bot = new DiscordBot_01.ManshowBot();
+            Pompadour AI = new DiscordBot_01.Pompadour();
+
 
         }
     }
