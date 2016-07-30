@@ -1042,7 +1042,10 @@ namespace DiscordBot_01
             {
                 e.Channel.SendMessage("https://www.youtube.com/watch?v=5vRlJrkxsqo");
             }
-
+            if (e.Message.Text.Contains("bustin'"))
+            {
+                e.Channel.SendMessage("https://www.youtube.com/watch?v=0tdyU_gW6WE");
+            }
 
 
 
