@@ -1046,7 +1046,10 @@ namespace DiscordBot_01
             {
                 e.Channel.SendMessage("https://www.youtube.com/watch?v=0tdyU_gW6WE");
             }
-
+            if (e.Message.Text.Contains("and they don't stop coming"))
+            {
+                e.Channel.SendMessage("https://www.youtube.com/watch?v=8ZhYNWwbJpQ");
+            }
 
 
             if (e.Message.Text.Contains(""))
