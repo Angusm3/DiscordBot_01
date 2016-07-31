@@ -1050,6 +1050,27 @@ namespace DiscordBot_01
             {
                 e.Channel.SendMessage("https://www.youtube.com/watch?v=8ZhYNWwbJpQ");
             }
+            string[] Crews =
+            {
+                "https://www.youtube.com/watch?v=6Ajhzlq42f0",
+                "https://www.youtube.com/watch?v=fU3jfk-O7L0",
+                "https://www.youtube.com/watch?v=yZ15vCGuvH0",
+                "https://www.youtube.com/watch?v=Wt7sCW9_DOc",
+                "https://www.youtube.com/watch?v=X1M69l7ZGlw",
+                "https://www.youtube.com/watch?v=25IhfWRO4Rk",
+                "https://www.youtube.com/watch?v=fI4ZhW1anKY",
+                "https://www.youtube.com/watch?v=RmEQ9iPQVrE",
+                "https://www.youtube.com/watch?v=QFAmaiZxLQw",
+                "https://www.youtube.com/watch?v=2tv-P28jVCQ",
+                "https://www.youtube.com/watch?v=yYFpVXX-nvA",
+                "https://www.youtube.com/watch?v=Bn62N5n3TDw"
+            };
+            if (e.Message.Text.Equals("old spice"))
+            {
+                Random rnd = new Random();
+                int roll = rnd.Next(1, Crews.Length);
+                e.Channel.SendMessage(Crews[roll]);
+            }
 
 
             if (e.Message.Text.Contains(""))
