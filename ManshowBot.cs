@@ -974,6 +974,24 @@ namespace DiscordBot_01
                     //{
                     //    return;
                     //}
+
+                    int DCFinal = 0;
+                    if (roll > 0)
+                    {
+                        DCFinal = roll;
+                    }
+                    if (rollSum > 0)
+                    {
+                        DCFinal = rollSum;
+                    }
+                    if (rollTotal > 0)
+                    {
+                        DCFinal = rollTotal;
+                    }
+
+
+
+                    e.Channel.SendMessage("roll: " + roll + "\nrollSum: " + rollSum + "\nrollTotal: " + rollTotal + "\nDCFinal: " + DCFinal + "\nDC: " + DCres);
                     try
                     {
 
@@ -986,17 +1004,17 @@ namespace DiscordBot_01
                         {
                             e.Channel.SendMessage("Critical Success");
                         }
-                        else if (DCn < roll + mod && DCn < DieArray[1])
+                        else if (DCFinal > DCn)
                         {
                             e.Channel.SendMessage("Passed");
                         }
-                        else if (DCn > roll + mod && DCn > 1)
+                        else if (DCn > DCFinal && DCn > 1)
                         {
                             e.Channel.SendMessage("Failed");
                         }
-                        else if (DCn == roll + mod)
+                        else if (DCn == DCFinal)
                         {
-                            e.Channel.SendMessage("Player Favour Success");
+                            e.Channel.SendMessage("Player Favour");
                         }
 
                     }
