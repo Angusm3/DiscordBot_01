@@ -674,9 +674,25 @@ namespace DiscordBot_01
                 
             {
 
-                string text = e.Message.Text;
-                text = text.Replace("roll ", "");
 
+
+                string text = e.Message.Text;
+                string DCres = "";
+                text = text.Replace("roll ", "");
+                text = text.Trim();
+
+
+                if (text.Contains("DC"))
+                {
+
+                    string[] DC = text.Split(new[] { "DC" }, StringSplitOptions.None);
+                    //e.Channel.SendMessage(DC[0] + ", " + "DC: " + DC[1]);
+
+                    text = DC[0];
+                    DCres = DC[1];
+                }
+
+                text = text.Trim();
 
 
                 if (text.Contains("k"))
@@ -751,7 +767,8 @@ namespace DiscordBot_01
                 else
                     
                 {
-                    char[] DieList = { 'd', '+' };
+                    char[] DieList = { 'd', '+', '-' };
+
 
                     string[] words = text.Split(DieList);
                     //                e.Channel.SendMessage("numbers in roll:" + words.Length);
@@ -764,17 +781,51 @@ namespace DiscordBot_01
                     DieArray[2] = 0;
                     try
                     {
-                        DieArray = text.Split('d', '+').Select(str => int.Parse(str)).ToArray();
+                        DieArray = text.Split('d', '+', '-').Select(str => int.Parse(str)).ToArray();
                     }
                     catch (FormatException)
                     {
                         //                   e.Channel.SendMessage("invalid die");
                         return;
                     }
-
+                    //
+                    // Positive Modifier
+                    //
                     try
                     {
                         if (e.Message.Text.Contains("+"))
+                        {
+                            mod = 0;
+                            if (DieArray[2] != 0)
+                            {
+                                mod = mod + DieArray[2];
+                            }
+                        }
+
+                        if (DieArray[1] == 0)
+                        {
+                            return;
+                        }
+
+                        var index = Array.FindIndex(DieArray, x => x == 2);
+                        Console.WriteLine(text);
+                        if (DieArray[1] > 1000)
+                            DieArray[1] = 1000;
+                        if (DieArray[0] > 500)
+                            DieArray[0] = 500;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        //                   e.Channel.SendMessage("invalid die");
+                        return;
+                    }
+                    //
+                    // Negative Modifier
+                    //
+
+                    try
+                    {
+                        if (e.Message.Text.Contains("-"))
                         {
                             mod = 0;
                             if (DieArray[2] != 0)
@@ -803,11 +854,15 @@ namespace DiscordBot_01
                     string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
                     if (mod == 0)
                     {
-                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1]);
+                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + ", DC: " + DCres);
                     }
-                    else if (mod > 0)
+                    else if (mod > 0 && text.Contains("+"))
                     {
-                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2]);
+                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2] + ", DC: " + DCres);
+                    }
+                    else if (mod > 0 && text.Contains("-"))
+                    {
+                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "-" + DieString[2] + ", DC: " + DCres);
                     }
 
                     Random rnd = new Random();
@@ -832,14 +887,29 @@ namespace DiscordBot_01
                                 ismodified = 0;
                                 ismultiple = 0;
                             }
-                            else if (DieArray[0] == 1 && mod > 0)
+                            else if (DieArray[0] == 1 && mod > 0 && text.Contains("+"))
                             {
                                 rollSum = rollSum + roll;
                                 e.Channel.SendMessage("Rolled .. " + roll);
                                 ismodified = 1;
                                 ismultiple = 0;
                             }
-                            else if (DieArray[0] > 1 && mod > 0)
+                            else if (DieArray[0] > 1 && mod > 0 && text.Contains("+"))
+                            {
+                                rollSum = rollSum + roll;
+                                DieOutput = DieOutput + roll + ", ";
+                                //e.Channel.SendMessage("Rolled .. " + roll);
+                                ismodified = 1;
+                                ismultiple = 1;
+                            }
+                            else if (DieArray[0] == 1 && mod > 0 && text.Contains("-"))
+                            {
+                                rollSum = roll - mod;
+                                e.Channel.SendMessage("Rolled .. " + roll);
+                                ismodified = 1;
+                                ismultiple = 0;
+                            }
+                            else if (DieArray[0] > 1 && mod > 0 && text.Contains("-"))
                             {
                                 rollSum = rollSum + roll;
                                 DieOutput = DieOutput + roll + ", ";
@@ -865,9 +935,9 @@ namespace DiscordBot_01
                     }
                     try
                     {
-                        if (DieOutput.EndsWith(","))
+                        if (DieOutput.EndsWith(", "))
                         {
-                            DieOutput = DieOutput.Remove(DieOutput.Length - 1);
+                            DieOutput = DieOutput.Remove(DieOutput.Length - 2);
                         }
                         e.Channel.SendMessage(DieOutput);
                     }
@@ -875,25 +945,68 @@ namespace DiscordBot_01
                     {
 
                     }
-
-                    if (ismodified == 1 && ismultiple == 1)
+                    int rollTotal = 0;
+                    if (ismodified == 1 && ismultiple == 1 && text.Contains("+"))
                     {
-                        int rollTotal = rollSum + mod;
+                        rollTotal = rollSum + mod;
                         e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + "(" + rollSum + ")" + " + " + DieArray[2] + " = " + rollTotal);
                     }
-                    else if (ismodified == 1 && ismultiple == 0)
+                    else if (ismodified == 1 && ismultiple == 0 && text.Contains("+"))
                     {
                         rollSum = total;
                         e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " + " + DieArray[2] + " = " + rollSum);
+                    }
+                    else if (ismodified == 1 && ismultiple == 1 && text.Contains("-"))
+                    {
+                        rollTotal = rollSum - mod;
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + "(" + rollSum + ")" + " - " + DieArray[2] + " = " + rollTotal);
+                    }
+                    else if (ismodified == 1 && ismultiple == 0 && text.Contains("-"))
+                    {
+                        //rollSum = total;
+                        e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " - " + DieArray[2] + " = " + rollSum);
                     }
                     else if (ismodified == 0 && ismultiple == 1)
                     {
                         e.Channel.SendMessage("Sum .. " + DieString[0] + "d" + DieArray[1] + " = " + rollSum);
                     }
-                    else if (ismodified == 0 && ismultiple == 0)
+                    //else if (ismodified == 0 && ismultiple == 0)
+                    //{
+                    //    return;
+                    //}
+                    try
                     {
-                        return;
+
+                        int DCn = Int32.Parse(DCres);
+                        if (roll == 1)
+                        {
+                            e.Channel.SendMessage("Critical Failure");
+                        }
+                        else if (roll == DieArray[1])
+                        {
+                            e.Channel.SendMessage("Critical Success");
+                        }
+                        else if (DCn < roll + mod && DCn < DieArray[1])
+                        {
+                            e.Channel.SendMessage("Passed");
+                        }
+                        else if (DCn > roll + mod && DCn > 1)
+                        {
+                            e.Channel.SendMessage("Failed");
+                        }
+                        else if (DCn == roll + mod)
+                        {
+                            e.Channel.SendMessage("Player Favour Success");
+                        }
+
                     }
+                    catch
+                    {}
+                    
+
+
+
+
                 }
 
 
@@ -950,19 +1063,19 @@ namespace DiscordBot_01
                 e.Channel.SendFile(image);
             }
 
-            if (e.User.Name == "Onee-chan")
-            {
-                //if (e.Message.Text.Contains("imgur"))
-                //{
-                //    return;
-                //}
-                string text = e.Message.Text;
-                text = text.Replace("senpai", "");
-                text = text.Replace("@Onee-chan", "Old Man Pompadour");
-                e.Message.Delete();
+            //if (e.User.Name == "Onee-chan")
+            //{
+            //    //if (e.Message.Text.Contains("imgur"))
+            //    //{
+            //    //    return;
+            //    //}
+            //    string text = e.Message.Text;
+            //    text = text.Replace("senpai", "");
+            //    text = text.Replace("@Onee-chan", "Old Man Pompadour");
+            //    e.Message.Delete();
 
-                e.Channel.SendMessage(text);
-            }
+            //    e.Channel.SendMessage(text);
+            //}
 
             //-----------------------------------------------------------------------------------
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

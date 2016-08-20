@@ -917,15 +917,15 @@ namespace DiscordBot_01
 
 
                 string PreOut = "";
-                PreOut = "Input was: " + Input + "\n" + "Adjective: " + InputSentenceAdjective + "\n" + "Noun: " + InputSentenceNoun + "\n" + "Pronoun: " + InputSentencePronoun + "Verb: " + InputSentenceVerb + "\n" + "Adverb: " + InputSentenceAdverb + "\n" + "Auxiliary Verb(s): " + InputSentenceAuxiliaryVerb;
+                PreOut = "Input was: " + Input + "\n" + "Adjective: " + InputSentenceAdjective + "\n" + "Noun: " + InputSentenceNoun + "\n" + "Pronoun: " + InputSentencePronoun + "\n" + "Verb: " + InputSentenceVerb + "\n" + "Adverb: " + InputSentenceAdverb + "\n" + "Auxiliary Verb(s): " + InputSentenceAuxiliaryVerb;
                 e.Channel.SendMessage(PreOut);
 
                 e.Channel.SendMessage("Subject is .. " + InputSentenceSubject + " .. ?");
-                e.Channel.SendMessage("Sentence Type .. " + InputSentenceType + " .. ?");
-                if (IsQuestion)
-                {
-                    e.Channel.SendMessage("Question is about: " + QuestionType);
-                }
+                //e.Channel.SendMessage("Sentence Type .. " + InputSentenceType + " .. ?");
+                //if (IsQuestion)
+                //{
+                //    e.Channel.SendMessage("Question is about: " + QuestionType);
+                //}
 
                 e.Channel.SendMessage("Output response: " + Output);
 
