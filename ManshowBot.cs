@@ -991,7 +991,7 @@ namespace DiscordBot_01
 
 
 
-                    e.Channel.SendMessage("roll: " + roll + "\nrollSum: " + rollSum + "\nrollTotal: " + rollTotal + "\nDCFinal: " + DCFinal + "\nDC: " + DCres);
+                    //e.Channel.SendMessage("roll: " + roll + "\nrollSum: " + rollSum + "\nrollTotal: " + rollTotal + "\nDCFinal: " + DCFinal + "\nDC: " + DCres);
                     try
                     {
 
