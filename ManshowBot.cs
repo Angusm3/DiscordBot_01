@@ -680,12 +680,13 @@ namespace DiscordBot_01
                 string DCres = "";
                 text = text.Replace("roll ", "");
                 text = text.Trim();
-
+                bool DCexists = false;
 
                 if (text.Contains("DC"))
                 {
 
                     string[] DC = text.Split(new[] { "DC" }, StringSplitOptions.None);
+                    DCexists = true;
                     //e.Channel.SendMessage(DC[0] + ", " + "DC: " + DC[1]);
 
                     text = DC[0];
@@ -852,18 +853,28 @@ namespace DiscordBot_01
                     }
 
                     string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
+                    string OutputMessage = "";
                     if (mod == 0)
                     {
-                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + ", DC: " + DCres);
+                        OutputMessage = "Dice Rolled: " + DieString[0] + "d" + DieString[1] + ", DC: " + DCres;
                     }
                     else if (mod > 0 && text.Contains("+"))
                     {
-                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2] + ", DC: " + DCres);
+                        OutputMessage = "Dice Rolled: " + DieString[0] + "d" + DieString[1] + "+" + DieString[2] + ", DC: " + DCres;
                     }
                     else if (mod > 0 && text.Contains("-"))
                     {
-                        e.Channel.SendMessage("Dice Rolled: " + DieString[0] + "d" + DieString[1] + "-" + DieString[2] + ", DC: " + DCres);
+                        OutputMessage = "Dice Rolled: " + DieString[0] + "d" + DieString[1] + "-" + DieString[2] + ", DC: " + DCres;
                     }
+
+
+
+                    if (DCexists == false)
+                    {
+                        OutputMessage = OutputMessage.Replace("DC:", "");
+                    }
+                    e.Channel.SendMessage(OutputMessage);
+
 
                     Random rnd = new Random();
 
@@ -1150,7 +1161,22 @@ namespace DiscordBot_01
                     sw.WriteLine(text);
                 }
             }
-            if (e.User.Name == "Finagin007")
+            if (e.User.Name == "KillaMaaki")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "Hindbodes")
             {
                 string path = @"AI\PompadourAI.csv";
                 string[] CharacterFile = File.ReadAllLines(path);
@@ -1213,7 +1239,7 @@ namespace DiscordBot_01
 
 
                 Random rnd = new Random();
-                int roll = rnd.Next(1, 20 + 1);
+                int roll = rnd.Next(1, 12 + 1);
                 int roll2 = rnd.Next(1, poop + 1);
                 string output = "";
 
