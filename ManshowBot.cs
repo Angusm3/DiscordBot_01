@@ -14,6 +14,7 @@ using NAudio;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using System.Web;
+using System.Threading;
 
 
 
@@ -68,7 +69,7 @@ namespace DiscordBot_01
             public string StringData2 { get; private set; }
         }
         string LoadedFile = "Character not found";
-
+        int msgchance = 12;
 
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
@@ -1234,13 +1235,14 @@ namespace DiscordBot_01
             {
                 string path = @"AI\PompadourAI.csv";
                 string[] outputline = File.ReadAllLines(path);
-                var poop = File.ReadAllLines(path).Length;
-
-
+                var doclength = File.ReadAllLines(path).Length;
+                msgchance -= 1;
+                Console.WriteLine(msgchance);
 
                 Random rnd = new Random();
-                int roll = rnd.Next(1, 12 + 1);
-                int roll2 = rnd.Next(1, poop + 1);
+
+                int roll = rnd.Next(1, msgchance + 1);
+                int roll2 = rnd.Next(1, doclength + 1);
                 string output = "";
 
 
@@ -1251,7 +1253,12 @@ namespace DiscordBot_01
 
 
                         output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int smtimer = (outputline[roll2].Length) * 150;
+                        e.Channel.SendIsTyping();
+                        Thread.Sleep(smtimer);
+                        Console.WriteLine("delay .. " + smtimer);
                         e.Channel.SendMessage(outputline[roll2]);
+                        msgchance += 8;
                     }
                 }
                 catch
@@ -1262,17 +1269,13 @@ namespace DiscordBot_01
 
 
 
-                if (e.Message.Text.Equals("test2"))
+                if (e.Message.Text.Contains("pompadour"))
                 {
-                    string s = TestClass2.SharedString2();
-                    e.Channel.SendMessage(s);
+                    if (e.Message.Text.Contains("shut up"))
+                    {
+
+                    }
                 }
-
-
-
-
-
-
             }
         }
     }
