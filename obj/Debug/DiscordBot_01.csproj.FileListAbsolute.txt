@@ -51,3 +51,21 @@ F:\%Hayle\DiscordBot_01\bin\Debug\NAudio.dll
 F:\%Hayle\DiscordBot_01\bin\Debug\NAudio.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\Imgur.API.dll
 F:\%Hayle\DiscordBot_01\bin\Debug\Imgur.API.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Discord.Net.Audio.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.Core.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Imgur.API.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\log4net.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\NAudio.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Zlib.Portable.dll
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.pdb
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.Core.pdb
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.Core.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.pdb
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Google.Apis.PlatformServices.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Imgur.API.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\log4net.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\NAudio.xml
+C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Zlib.Portable.xml

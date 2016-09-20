@@ -30,12 +30,13 @@ namespace DiscordBot_01
 
 
 
-
-
-            bot.ExecuteAndWait(async () =>
+            try
             {
-                bot.MessageReceived += Bot_MessageReceived;
-                await bot.Connect("treeforge2.al@gmail.com", "superbotpassword");
+
+                bot.ExecuteAndWait(async () =>
+                {
+                    bot.MessageReceived += Bot_MessageReceived;
+                    await bot.Connect("treeforge2.al@gmail.com", "superbotpassword");
 
 
 
@@ -50,7 +51,10 @@ namespace DiscordBot_01
 
 
             });
-
+            }
+            catch {
+                Console.WriteLine("Strange Error");
+                    }
 
         }
 
@@ -1183,6 +1187,10 @@ namespace DiscordBot_01
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
                 text = text.Replace("senpai", "");
+                if (text.StartsWith("~"))
+                {
+                    text = "";
+                }
                 string[] AIfile = new string[1]
                 {
                     text
@@ -1195,6 +1203,64 @@ namespace DiscordBot_01
 
 
 
+
+
+
+
+            if (e.Message.Text.Contains(""))
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] outputline = File.ReadAllLines(path);
+                var doclength = File.ReadAllLines(path).Length;
+                msgchance -= 1;
+                Console.WriteLine(msgchance);
+
+                Random rnd = new Random();
+
+                int roll = rnd.Next(1, msgchance + 1);
+                int roll2 = rnd.Next(1, doclength + 1);
+                string output = "";
+
+
+                try
+                {
+                    if (roll == 1)
+                    {
+
+
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int smtimer = (outputline[roll2].Length) * 50;
+                        e.Channel.SendIsTyping();
+                        Thread.Sleep(smtimer);
+                        Console.WriteLine("delay .. " + smtimer);
+                        e.Channel.SendMessage(outputline[roll2]);
+                        msgchance += 8;
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+
+
+
+                if (e.Message.Text.Contains("pompadour"))
+                {
+                    if (e.Message.Text.Contains("shut up"))
+                    {
+
+                    }
+                }
+            }
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //Misc. functions
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
 
             if (e.Message.Text.Contains("the best"))
             {
@@ -1231,52 +1297,7 @@ namespace DiscordBot_01
             }
 
 
-            if (e.Message.Text.Contains(""))
-            {
-                string path = @"AI\PompadourAI.csv";
-                string[] outputline = File.ReadAllLines(path);
-                var doclength = File.ReadAllLines(path).Length;
-                msgchance -= 1;
-                Console.WriteLine(msgchance);
 
-                Random rnd = new Random();
-
-                int roll = rnd.Next(1, msgchance + 1);
-                int roll2 = rnd.Next(1, doclength + 1);
-                string output = "";
-
-
-                try
-                {
-                    if (roll == 1)
-                    {
-
-
-                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
-                        int smtimer = (outputline[roll2].Length) * 150;
-                        e.Channel.SendIsTyping();
-                        Thread.Sleep(smtimer);
-                        Console.WriteLine("delay .. " + smtimer);
-                        e.Channel.SendMessage(outputline[roll2]);
-                        msgchance += 8;
-                    }
-                }
-                catch
-                {
-                    return;
-                }
-
-
-
-
-                if (e.Message.Text.Contains("pompadour"))
-                {
-                    if (e.Message.Text.Contains("shut up"))
-                    {
-
-                    }
-                }
-            }
         }
     }
 }
