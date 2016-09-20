@@ -1172,6 +1172,10 @@ namespace DiscordBot_01
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
                 text = text.Replace("senpai", "");
+                if (text.StartsWith("~"))
+                {
+                    text = "";
+                }
                 string[] AIfile = new string[1]
                 {
                     text
