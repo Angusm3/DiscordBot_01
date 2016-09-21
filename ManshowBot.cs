@@ -1185,16 +1185,15 @@ namespace DiscordBot_01
                     sw.WriteLine(text);
                 }
             }
-            if (e.User.Name == "Hindbodes")
+
+
+
+            if (e.Message.Text.Contains("no ") || e.Message.Text.Contains("n't") || e.Message.Text.Contains("not "))
             {
-                string path = @"AI\PompadourAI.csv";
+                string path = @"AI\Negative.csv";
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
                 text = text.Replace("senpai", "");
-                if (text.StartsWith("~"))
-                {
-                    text = "";
-                }
                 string[] AIfile = new string[1]
                 {
                     text
