@@ -1232,7 +1232,9 @@ namespace DiscordBot_01
 
 
                         output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int rdtimer = (e.Message.Text.Length * 150) + 2000;
                         int smtimer = (outputline[roll2].Length) * 50;
+                        Thread.Sleep(rdtimer);
                         e.Channel.SendIsTyping();
                         Thread.Sleep(smtimer);
                         Console.WriteLine("delay .. " + smtimer);
