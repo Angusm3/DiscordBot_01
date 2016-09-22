@@ -747,11 +747,20 @@ namespace DiscordBot_01
                         return;
                     }
                     string ElementString = "";
-
+                    string finaloutput = "";
                     foreach (int Element in DieResult)
                     {
                         ElementString = Element.ToString();
-                        e.Channel.SendMessage(ElementString);
+                        finaloutput = finaloutput + ElementString + ", ";
+
+                    }
+                    if (finaloutput.Length > 1950)
+                    {
+                        e.Channel.SendMessage("string length exceeds 2000 characters");
+                    }
+                    if (finaloutput.Length < 1950)
+                    {
+                        e.Channel.SendMessage(finaloutput);
                     }
 
                     int KeepSum = 0;
@@ -1276,6 +1285,7 @@ namespace DiscordBot_01
 
             if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour"))
             {
+                msgchance = 2;
                 if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid") || e.Message.Text.Contains("bad") || e.Message.Text.Contains("ultron"))
                 {
                     string path = @"AI\Negative.csv";
