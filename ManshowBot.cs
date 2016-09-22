@@ -74,12 +74,13 @@ namespace DiscordBot_01
         }
         string LoadedFile = "Character not found";
         int msgchance = 12;
-        int negchance = 2;
+        int negchance = 1;
         int poschance = 4;
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
             if (e.Message.IsAuthor) return;
+//            if (e.Message.User.Equals("Angus")) return;
 
 
             //-----------------------------------------------------------------------------------
@@ -1303,7 +1304,7 @@ namespace DiscordBot_01
                             Thread.Sleep(smtimer);
                             Console.WriteLine("NEGATIVE--delay .. " + smtimer);
                             e.Channel.SendMessage(outputline[roll2]);
-                            msgchance += 2;
+                            negchance += 1;
                         }
                     }
                     catch
