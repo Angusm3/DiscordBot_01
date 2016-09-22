@@ -74,7 +74,8 @@ namespace DiscordBot_01
         }
         string LoadedFile = "Character not found";
         int msgchance = 12;
-
+        int negchance = 2;
+        int poschance = 4;
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
@@ -1193,7 +1194,8 @@ namespace DiscordBot_01
                 string path = @"AI\Negative.csv";
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
-                text = text.Replace("senpai", "");
+                text = text.ToLower();
+                text = text.Replace("pomp", "he");
                 string[] AIfile = new string[1]
                 {
                     text
@@ -1206,6 +1208,23 @@ namespace DiscordBot_01
 
 
 
+            if (e.Message.Text.Contains("http"))
+            {
+                string path = @"AI\Links.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+                return;
+            }
+
+
 
 
 
@@ -1216,7 +1235,7 @@ namespace DiscordBot_01
                 string[] outputline = File.ReadAllLines(path);
                 var doclength = File.ReadAllLines(path).Length;
                 msgchance -= 1;
-                Console.WriteLine(msgchance);
+                Console.WriteLine("NML .. "+msgchance);
 
                 Random rnd = new Random();
 
@@ -1247,17 +1266,55 @@ namespace DiscordBot_01
                     return;
                 }
 
+            }
 
 
 
-                if (e.Message.Text.Contains("pompadour"))
+
+
+            if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour"))
+            {
+                if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid"))
                 {
-                    if (e.Message.Text.Contains("shut up"))
-                    {
+                    string path = @"AI\Negative.csv";
+                    string[] outputline = File.ReadAllLines(path);
+                    var doclength = File.ReadAllLines(path).Length;
+                    negchance -= 1;
+                    Console.WriteLine("NEG .. " + msgchance);
 
+                    Random rnd = new Random();
+
+                    int roll = rnd.Next(1, negchance + 1);
+                    int roll2 = rnd.Next(1, doclength + 1);
+                    string output = "";
+
+
+                    try
+                    {
+                        if (roll == 1)
+                        {
+
+
+                            output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                            int rdtimer = (e.Message.Text.Length * 150) + 2000;
+                            int smtimer = (outputline[roll2].Length) * 50;
+                            Thread.Sleep(rdtimer);
+                            e.Channel.SendIsTyping();
+                            Thread.Sleep(smtimer);
+                            Console.WriteLine("NEGATIVE--delay .. " + smtimer);
+                            e.Channel.SendMessage(outputline[roll2]);
+                            msgchance += 2;
+                        }
+                    }
+                    catch
+                    {
+                        return;
                     }
                 }
             }
+
+
+
 
             //-----------------------------------------------------------------------------------
             //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
