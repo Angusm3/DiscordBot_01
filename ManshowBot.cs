@@ -75,7 +75,7 @@ namespace DiscordBot_01
         string LoadedFile = "Character not found";
         int msgchance = 12;
         int negchance = 1;
-        int poschance = 4;
+//        int poschance = 4;
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
@@ -1196,7 +1196,8 @@ namespace DiscordBot_01
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
                 text = text.ToLower();
-                text = text.Replace("pomp", "he");
+                text = text.Replace("pompadour", "he");
+                text = text.Replace("Pompadour", "he");
                 string[] AIfile = new string[1]
                 {
                     text
@@ -1275,7 +1276,7 @@ namespace DiscordBot_01
 
             if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour"))
             {
-                if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid"))
+                if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid") || e.Message.Text.Contains("bad") || e.Message.Text.Contains("ultron"))
                 {
                     string path = @"AI\Negative.csv";
                     string[] outputline = File.ReadAllLines(path);
@@ -1305,6 +1306,10 @@ namespace DiscordBot_01
                             Console.WriteLine("NEGATIVE--delay .. " + smtimer);
                             e.Channel.SendMessage(outputline[roll2]);
                             negchance += 1;
+                            if (negchance < 1)
+                            {
+                                negchance = 1;
+                            }
                         }
                     }
                     catch
