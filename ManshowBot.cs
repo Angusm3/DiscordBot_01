@@ -1239,6 +1239,19 @@ namespace DiscordBot_01
 
 
 
+            if (e.Message.Text.Contains(""))
+            {
+                string text = "";
+                text = e.Message.Text;
+                text.ToLower();
+                if (text.Contains("pomp"))
+                {
+                    msgchance = 2;
+                }
+
+            }
+
+
 
             if (e.Message.Text.Contains(""))
             {
