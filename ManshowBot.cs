@@ -1398,17 +1398,14 @@ namespace DiscordBot_01
             {
                 msgchance = 2;
                 string text = e.Message.Text;
-                if (e.Message.Text.Contains("%NAM_"))
-                {
-                    text = text.Replace("%NAM_", e.User.Name);
-                }
+                text.ToLower();
                 Console.WriteLine(text);
 
 
 
 
 
-                if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid") || e.Message.Text.Contains("bad") || e.Message.Text.Contains("ultron"))
+                if (text.Contains("shut") || text.Contains("stop") || text.Contains("stupid") || text.Contains("bad") || text.Contains("ultron"))
                 {
                     string path = @"AI\Negative.csv";
                     string[] outputline = File.ReadAllLines(path);
@@ -1444,7 +1441,7 @@ namespace DiscordBot_01
 
 
 
-                if (e.Message.Text.Contains("greeting") || e.Message.Text.Contains("hello") || e.Message.Text.Contains("hey") || e.Message.Text.Contains("yo") || e.Message.Text.Contains("sup") || e.Message.Text.Contains("hai") || e.Message.Text.Contains("hi") || e.Message.Text.Contains("wassap"))
+                if (text.Contains("greeting") || text.Contains("hello") || text.Contains("hey") || text.Contains("yo") || text.Contains("sup") || text.Contains("hai") || text.Contains("hi") || text.Contains("wassap"))
                 {
                     string path = @"AI\Greetings.csv";
                     string[] outputline = File.ReadAllLines(path);
