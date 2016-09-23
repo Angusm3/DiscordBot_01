@@ -1320,7 +1320,7 @@ namespace DiscordBot_01
                 text.ToLower();
                 if (text.Contains("pomp"))
                 {
-                    msgchance = 2;
+                    msgchance = 20;
                 }
 
             }
@@ -1402,7 +1402,7 @@ namespace DiscordBot_01
                 {
                     text = text.Replace("%NAM_", e.User.Name);
                 }
-
+                Console.WriteLine(text);
 
 
 
@@ -1468,7 +1468,10 @@ namespace DiscordBot_01
                             e.Channel.SendIsTyping();
                             Thread.Sleep(smtimer);
                             Console.WriteLine("GREETING--delay .. " + smtimer);
-                            e.Channel.SendMessage(outputline[roll2]);
+                            text = outputline[roll2];
+                            text = text.Replace("%NAM_", e.User.Name);
+                            Console.WriteLine(text);
+                            e.Channel.SendMessage(text);
 
                     }
                     catch
