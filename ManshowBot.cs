@@ -1396,7 +1396,6 @@ namespace DiscordBot_01
 
             if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour") || e.Message.Text.Contains("pomp") || e.Message.Text.Contains("Pomp"))
             {
-                msgchance = 2;
                 string text = e.Message.Text;
                 text.ToLower();
                 Console.WriteLine(text);
