@@ -74,8 +74,6 @@ namespace DiscordBot_01
         }
         string LoadedFile = "Character not found";
         int msgchance = 12;
-        int negchance = 1;
-//        int poschance = 4;
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
@@ -713,6 +711,31 @@ namespace DiscordBot_01
                     DieArray[0] = 0;
                     DieArray[1] = 0;
                     DieArray[2] = 0;
+
+
+
+                    bool res = int.TryParse(text, out DieArray[0]);
+                    if (res == false)
+                    {
+                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                        return;
+                    }
+                    bool res2 = int.TryParse(text, out DieArray[1]);
+                    if (res == false)
+                    {
+                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                        return;
+                    }
+                    bool res3 = int.TryParse(text, out DieArray[2]);
+                    if (res == false)
+                    {
+                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                        return;
+                    }
+
+
+
+
                     try
                     {
                         DieArray = text.Split('d', 'k').Select(str => int.Parse(str)).ToArray();
@@ -722,6 +745,9 @@ namespace DiscordBot_01
                         //                   e.Channel.SendMessage("invalid die");
                         return;
                     }
+
+
+
                     string[] DieString = DieArray.Select(x => x.ToString()).ToArray();
                     //e.Channel.SendMessage("Rolling KeepDice Function ..  Amount .. " + DieString[0] + " |Die ..  " + DieString[1] + " |Keep .. " + DieString[2]);
 
@@ -796,8 +822,32 @@ namespace DiscordBot_01
                     DieArray[0] = 0;
                     DieArray[1] = 0;
                     DieArray[2] = 0;
+                    
                     try
                     {
+
+
+
+
+                        bool res = int.TryParse(text, out DieArray[0]);
+                        if (res == false)
+                        {
+                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                            return;
+                        }
+                        bool res2 = int.TryParse(text, out DieArray[1]);
+                        if (res == false)
+                        {
+                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                            return;
+                        }
+                        bool res3 = int.TryParse(text, out DieArray[2]);
+                        if (res == false)
+                        {
+                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                            return;
+                        }
+
                         DieArray = text.Split('d', '+', '-').Select(str => int.Parse(str)).ToArray();
                     }
                     catch (FormatException)
@@ -1205,8 +1255,8 @@ namespace DiscordBot_01
                 string[] CharacterFile = File.ReadAllLines(path);
                 string text = e.Message.Text;
                 text = text.ToLower();
-                text = text.Replace("pompadour", "he");
-                text = text.Replace("Pompadour", "he");
+                text = text.Replace("pompadour", "%NAM_");
+                text = text.Replace("pomp", "%NAM_");
                 string[] AIfile = new string[1]
                 {
                     text
@@ -1217,6 +1267,30 @@ namespace DiscordBot_01
                 }
             }
 
+
+
+            if (e.Message.Text.Contains("greeting") || e.Message.Text.Contains("hello") || e.Message.Text.Contains("hey") || e.Message.Text.Contains("yo ") || e.Message.Text.Contains("sup ") || e.Message.Text.Contains("hai ") || e.Message.Text.Contains("hi ") || e.Message.Text.Contains("wassap"))
+            {
+                string path = @"AI\Greetings.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.ToLower();
+                text = text.Replace("pompadour", "%NAM_");
+                text = text.Replace("pomp", "%NAM_");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+
+            
 
 
             if (e.Message.Text.Contains("http"))
@@ -1292,6 +1366,30 @@ namespace DiscordBot_01
 
             }
 
+            /* add greetings
+             * fix roll overflow
+             * recognize name 
+             * replace name with %NAM_
+             * 
+             * 
+             * 
+             */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1299,26 +1397,30 @@ namespace DiscordBot_01
             if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour") || e.Message.Text.Contains("pomp") || e.Message.Text.Contains("Pomp"))
             {
                 msgchance = 2;
+                string text = e.Message.Text;
+                if (e.Message.Text.Contains("%NAM_"))
+                {
+                    text = text.Replace("%NAM_", e.User.Name);
+                }
+
+
+
+
+
+
                 if (e.Message.Text.Contains("shut") || e.Message.Text.Contains("stop") || e.Message.Text.Contains("stupid") || e.Message.Text.Contains("bad") || e.Message.Text.Contains("ultron"))
                 {
                     string path = @"AI\Negative.csv";
                     string[] outputline = File.ReadAllLines(path);
                     var doclength = File.ReadAllLines(path).Length;
-                    negchance -= 1;
-                    Console.WriteLine("NEG .. " + msgchance);
-
                     Random rnd = new Random();
 
-                    int roll = rnd.Next(1, negchance + 1);
                     int roll2 = rnd.Next(1, doclength + 1);
                     string output = "";
 
 
                     try
                     {
-                        if (roll == 1)
-                        {
-
 
                             output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
                             int rdtimer = (e.Message.Text.Length * 150) + 2000;
@@ -1328,18 +1430,53 @@ namespace DiscordBot_01
                             Thread.Sleep(smtimer);
                             Console.WriteLine("NEGATIVE--delay .. " + smtimer);
                             e.Channel.SendMessage(outputline[roll2]);
-                            negchance += 1;
-                            if (negchance < 1)
-                            {
-                                negchance = 1;
-                            }
-                        }
+
                     }
                     catch
                     {
                         return;
                     }
                 }
+
+
+
+
+
+
+
+                if (e.Message.Text.Contains("greeting") || e.Message.Text.Contains("hello") || e.Message.Text.Contains("hey") || e.Message.Text.Contains("yo") || e.Message.Text.Contains("sup") || e.Message.Text.Contains("hai") || e.Message.Text.Contains("hi") || e.Message.Text.Contains("wassap"))
+                {
+                    string path = @"AI\Greetings.csv";
+                    string[] outputline = File.ReadAllLines(path);
+                    var doclength = File.ReadAllLines(path).Length;
+                    msgchance -= 1;
+                    Console.WriteLine("GREET .. " + msgchance);
+
+                    Random rnd = new Random();
+
+                    int roll = rnd.Next(1, msgchance + 1);
+                    int roll2 = rnd.Next(1, doclength + 1);
+                    string output = "";
+
+
+                    try
+                    {
+                            output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                            int rdtimer = (e.Message.Text.Length * 150) + 1000;
+                            int smtimer = (outputline[roll2].Length) * 50;
+                            Thread.Sleep(rdtimer);
+                            e.Channel.SendIsTyping();
+                            Thread.Sleep(smtimer);
+                            Console.WriteLine("GREETING--delay .. " + smtimer);
+                            e.Channel.SendMessage(outputline[roll2]);
+
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
             }
 
 
