@@ -713,30 +713,42 @@ namespace DiscordBot_01
                     DieArray[2] = 0;
 
 
-
-                    bool res = int.TryParse(text, out DieArray[0]);
-                    if (res == false)
-                    {
-                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
-                        return;
-                    }
-                    bool res2 = int.TryParse(text, out DieArray[1]);
-                    if (res == false)
-                    {
-                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
-                        return;
-                    }
-                    bool res3 = int.TryParse(text, out DieArray[2]);
-                    if (res == false)
-                    {
-                        e.Channel.SendMessage("one or multiple integers exceed 32 bits");
-                        return;
-                    }
+                    string[] IMDARRAY;
+                    IMDARRAY = new string[3];
+                    IMDARRAY[0] = "";
+                    IMDARRAY[1] = "";
+                    IMDARRAY[2] = "0";
 
 
 
 
-                    try
+                        // IMDARRAY = text.Split('d', '+', '-').ToArray(IMDARRAY);
+
+                        char[] charSeparators;
+                        charSeparators = new char[3];
+                        charSeparators[0] = 'd';
+                        charSeparators[1] = '+';
+                        charSeparators[2] = '-';
+
+
+
+                        IMDARRAY = text.Split(charSeparators, StringSplitOptions.None);
+
+                        if (IMDARRAY[0].Length > 9)
+                        {
+                            e.Channel.SendMessage("die amount exceeds int range");
+                            return;
+                        }
+                        if (IMDARRAY[1].Length > 9)
+                        {
+                            e.Channel.SendMessage("die value exceeds int range");
+                            return;
+                        }
+
+
+
+
+                        try
                     {
                         DieArray = text.Split('d', 'k').Select(str => int.Parse(str)).ToArray();
                     }
@@ -822,30 +834,48 @@ namespace DiscordBot_01
                     DieArray[0] = 0;
                     DieArray[1] = 0;
                     DieArray[2] = 0;
-                    
+
+                    string[] IMDARRAY;
+                    IMDARRAY = new string[3];
+                    IMDARRAY[0] = "";
+                    IMDARRAY[1] = "";
+                    IMDARRAY[2] = "0";
+
+
+
                     try
                     {
 
+                       // IMDARRAY = text.Split('d', '+', '-').ToArray(IMDARRAY);
+
+                        char[] charSeparators;
+                        charSeparators = new char[3];
+                        charSeparators[0] = 'd';
+                        charSeparators[1] = '+';
+                        charSeparators[2] = '-';
 
 
 
-                        bool res = int.TryParse(text, out DieArray[0]);
-                        if (res == false)
+                        IMDARRAY = text.Split(charSeparators, StringSplitOptions.None);
+
+                        if (IMDARRAY[0].Length > 9)
                         {
-                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                            e.Channel.SendMessage("die amount exceeds int range");
                             return;
                         }
-                        bool res2 = int.TryParse(text, out DieArray[1]);
-                        if (res == false)
+                        if (IMDARRAY[1].Length > 9)
                         {
-                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
+                            e.Channel.SendMessage("die value exceeds int range");
                             return;
                         }
-                        bool res3 = int.TryParse(text, out DieArray[2]);
-                        if (res == false)
+                        try
                         {
-                            e.Channel.SendMessage("one or multiple integers exceed 32 bits");
-                            return;
+                            if (IMDARRAY[2].Length > 9)
+                            {
+                            }
+                        }
+                        catch
+                        {
                         }
 
                         DieArray = text.Split('d', '+', '-').Select(str => int.Parse(str)).ToArray();
@@ -1290,7 +1320,18 @@ namespace DiscordBot_01
 
 
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             if (e.Message.Text.Contains("http"))
@@ -1474,6 +1515,75 @@ namespace DiscordBot_01
                     {
                         return;
                     }
+                }
+
+
+
+                if (text.Contains("are you") || text.Contains("what is") )
+                {
+                    string newfile = @"AI\Response1.csv";
+
+                    if (text.StartsWith("create "))
+                    {
+
+                        if (File.Exists(newfile))
+                        {
+                            string path = newfile;
+                            string[] outputline = File.ReadAllLines(path);
+                            var doclength = File.ReadAllLines(path).Length;
+                            msgchance -= 1;
+                            Console.WriteLine("RESPONSE1 .. " + msgchance);
+
+                            Random rnd = new Random();
+
+                            int roll = rnd.Next(1, msgchance + 1);
+                            int roll2 = rnd.Next(1, doclength + 1);
+                            string output = "";
+
+
+                            try
+                            {
+                                output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                                int rdtimer = (e.Message.Text.Length * 150) + 1000;
+                                int smtimer = (outputline[roll2].Length) * 50;
+                                Thread.Sleep(rdtimer);
+                                e.Channel.SendIsTyping();
+                                Thread.Sleep(smtimer);
+                                Console.WriteLine("RESPONSE1--delay .. " + smtimer);
+                                text = outputline[roll2];
+                                text = text.Replace("%NAM_", e.User.Name);
+                                Console.WriteLine(text);
+                                e.Channel.SendMessage(text);
+
+                            }
+                            catch
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                using (FileStream fs = File.Create(newfile))
+                                {
+                                    Byte[] info = new UTF8Encoding(true).GetBytes("");
+
+                                    fs.Write(info, 0, info.Length);
+
+
+                                }
+                            }
+                            catch
+                            {
+                                e.Channel.SendMessage("error");
+                                return;
+                            }
+
+                        }
+
+                    }
+
                 }
 
             }
