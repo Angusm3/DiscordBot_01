@@ -21,11 +21,6 @@ C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBo
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.dll
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\RollGen.Domain.dll
 C:\Users\treef_000\Documents\Visual Studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Ninject.xml
-F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.exe.config
-F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.exe
-F:\%Hayle\DiscordBot_01\obj\Debug\DiscordBot_01.pdb
-F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.exe
-F:\%Hayle\DiscordBot_01\bin\Debug\DiscordBot_01.pdb
 F:\%Hayle\DiscordBot_01\bin\Debug\Newtonsoft.Json.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\Ninject.xml
 F:\%Hayle\DiscordBot_01\bin\Debug\Nito.AsyncEx.xml
@@ -69,3 +64,8 @@ C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBo
 C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\log4net.xml
 C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\NAudio.xml
 C:\Users\treef_000\documents\visual studio 2015\Projects\DiscordBot_01\DiscordBot_01\bin\Debug\Zlib.Portable.xml
+F:\%Hayle\DiscordBot_01\bin\Debug\Pompadour.exe.config
+F:\%Hayle\DiscordBot_01\bin\Debug\Pompadour.exe
+F:\%Hayle\DiscordBot_01\bin\Debug\Pompadour.pdb
+F:\%Hayle\DiscordBot_01\obj\Debug\Pompadour.exe
+F:\%Hayle\DiscordBot_01\obj\Debug\Pompadour.pdb

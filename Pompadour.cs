@@ -15,9 +15,11 @@ using NAudio;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using System.Web;
+using System.Threading;
 
 namespace DiscordBot_01
 {
+
     public class Pompadour
     {
         private DiscordClient AI;
@@ -46,7 +48,22 @@ namespace DiscordBot_01
 
 
 
+        public struct Data
+        {
+            public Data(int row, string title, string value)
+            {
+                IntegerData = row;
+                StringData = title;
+                StringData2 = value;
+            }
 
+            public int IntegerData { get; private set; }
+            public string StringData { get; private set; }
+            public string StringData2 { get; private set; }
+        }
+#pragma warning disable 0414
+        string LoadedFile = "Character not found";
+        int msgchance = 12;
 
 
 
@@ -58,7 +75,7 @@ namespace DiscordBot_01
         string[] PronounList = { };
         string[] VerbList = { };
         string[] AdverbList = { };
-
+        int LoadedLists = 0;
 
         public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
@@ -75,9 +92,365 @@ namespace DiscordBot_01
             string InputText = e.Message.Text;
             string UserPath = @"AI\";
 
-            if (e.Message.Text.Contains("hello"))
+
+
+
+            if (LoadedLists < 5)
             {
-                e.Channel.SendMessage("Hello World!");
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Adjectives
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                string AdjectivePath = @"AI\Lists\adjectives";
+
+
+
+                string[] FileEntriesAdj = Directory.GetFiles(AdjectivePath);
+
+
+                string[] FileNames = new string[FileEntriesAdj.Length];
+                string[] LineArray = { "" };
+                int AdjectiveListLength = 0;
+
+                foreach (string filename in FileEntriesAdj)
+                {
+
+                }
+                Console.WriteLine("" + FileNames.Length + " files found");
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
+                int TotalLines = 0;
+
+                for (int i = 0; i < FileEntriesAdj.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesAdj[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        AdjectiveListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordList = new string[AdjectiveListLength];
+                AdjectiveList = new string[AdjectiveListLength];
+                Console.WriteLine("Length .. " + AdjectiveListLength);
+                Console.WriteLine("String Length .. " + WordList.Length);
+                int Adjo = 0;
+                for (int i = 0; i < FileEntriesAdj.Length; i++)
+                {
+                    WordList = File.ReadAllLines(FileEntriesAdj[i]);
+                    foreach (string s in WordList)
+                    {
+
+                        AdjectiveList[Adjo] = s;
+                        Adjo += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+                }
+
+
+
+
+
+                //e.Channel.SendMessage("Adjective List Loaded");
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Names
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                string NamePath = @"AI\Lists\names";
+
+
+
+                string[] FileEntriesName = Directory.GetFiles(NamePath);
+
+
+                string[] FileNamesName = new string[FileEntriesName.Length];
+                string[] LineArrayName = { "" };
+                int NameListLength = 0;
+
+                foreach (string filename in FileEntriesName)
+                {
+
+                }
+                Console.WriteLine("" + FileNamesName.Length + " files found");
+                int TotalLinesName = 0;
+                for (int i = 0; i < FileEntriesName.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesName[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        NameListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordListName = new string[NameListLength];
+                NameList = new string[NameListLength];
+                Console.WriteLine("Length .. " + NameListLength);
+                Console.WriteLine("String Length .. " + WordListName.Length);
+                int Nameo = 0;
+                for (int i = 0; i < FileEntriesName.Length; i++)
+                {
+                    WordListName = File.ReadAllLines(FileEntriesName[i]);
+                    foreach (string s in WordListName)
+                    {
+
+                        NameList[Nameo] = s;
+                        Nameo += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+                }
+
+
+
+
+
+                //e.Channel.SendMessage("Name List Loaded");
+
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Nouns
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                string NounPath = @"AI\Lists\nouns";
+
+
+
+                string[] FileEntriesNoun = Directory.GetFiles(NounPath);
+
+
+                string[] FileNouns = new string[FileEntriesNoun.Length];
+                string[] LineArrayNoun = { "" };
+                int NounListLength = 0;
+
+                foreach (string filenoun in FileEntriesNoun)
+                {
+
+                }
+                Console.WriteLine("" + FileNouns.Length + " files found");
+                int TotalLinesNoun = 0;
+                for (int i = 0; i < FileEntriesNoun.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesNoun[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        NounListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordListNoun = new string[NounListLength];
+                NounList = new string[NounListLength];
+                Console.WriteLine("Length .. " + NounListLength);
+                Console.WriteLine("String Length .. " + WordListNoun.Length);
+                int Nouno = 0;
+                for (int i = 0; i < FileEntriesNoun.Length; i++)
+                {
+                    WordListNoun = File.ReadAllLines(FileEntriesNoun[i]);
+                    foreach (string s in WordListNoun)
+                    {
+
+                        NounList[Nouno] = s;
+                        Nouno += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+
+                }
+
+
+
+
+
+                //e.Channel.SendMessage("Noun List Loaded");
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Pronouns
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                string PronounPath = @"AI\Lists\pronouns";
+
+
+
+                string[] FileEntriesPronoun = Directory.GetFiles(PronounPath);
+
+
+                string[] FilePronouns = new string[FileEntriesPronoun.Length];
+                string[] LineArrayPronoun = { "" };
+                int PronounListLength = 0;
+
+                foreach (string filepronoun in FileEntriesPronoun)
+                {
+
+                }
+                Console.WriteLine("" + FilePronouns.Length + " files found");
+                int TotalLinesPronoun = 0;
+                for (int i = 0; i < FileEntriesPronoun.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesPronoun[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        PronounListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordListPronoun = new string[PronounListLength];
+                PronounList = new string[PronounListLength];
+                Console.WriteLine("Length .. " + PronounListLength);
+                Console.WriteLine("String Length .. " + WordListPronoun.Length);
+                int Pronouno = 0;
+                for (int i = 0; i < FileEntriesPronoun.Length; i++)
+                {
+                    WordListPronoun = File.ReadAllLines(FileEntriesPronoun[i]);
+                    foreach (string s in WordListPronoun)
+                    {
+
+                        PronounList[Pronouno] = s;
+                        Pronouno += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+
+                }
+
+
+
+
+
+                //e.Channel.SendMessage("Pronoun List Loaded");
+
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Verbs
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                string VerbPath = @"AI\Lists\verbs";
+
+
+
+                string[] FileEntriesVerb = Directory.GetFiles(VerbPath);
+
+
+                string[] FileVerbs = new string[FileEntriesVerb.Length];
+                string[] LineArrayVerb = { "" };
+                int VerbListLength = 0;
+
+                foreach (string fileverb in FileEntriesVerb)
+                {
+
+                }
+                Console.WriteLine("" + FileVerbs.Length + " files found");
+                int TotalLinesVerb = 0;
+                for (int i = 0; i < FileEntriesVerb.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesVerb[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        VerbListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordListVerb = new string[VerbListLength];
+                VerbList = new string[VerbListLength];
+                Console.WriteLine("Length .. " + VerbListLength);
+                Console.WriteLine("String Length .. " + WordListVerb.Length);
+                int Verbo = 0;
+                for (int i = 0; i < FileEntriesVerb.Length; i++)
+                {
+                    WordListVerb = File.ReadAllLines(FileEntriesVerb[i]);
+                    foreach (string s in WordListVerb)
+                    {
+
+                        VerbList[Verbo] = s;
+                        Verbo += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+                }
+
+
+
+
+                //e.Channel.SendMessage("Verb List Loaded");
+
+
+
+
+
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                //Load Adverbs
+                //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                string AdverbPath = @"AI\Lists\adverbs";
+
+
+
+                string[] FileEntriesAdverb = Directory.GetFiles(AdverbPath);
+
+
+                string[] FileAdverbs = new string[FileEntriesAdverb.Length];
+                string[] LineArrayAdverb = { "" };
+                int AdverbListLength = 0;
+
+                foreach (string fileadverb in FileEntriesAdverb)
+                {
+
+                }
+                Console.WriteLine("" + FileAdverbs.Length + " files found");
+                int TotalLinesAdverb = 0;
+                for (int i = 0; i < FileEntriesAdverb.Length; i++)
+                {
+                    string[] CharacterFile = File.ReadAllLines(FileEntriesAdverb[i]);
+                    foreach (string s in CharacterFile)
+                    {
+                        //Console.WriteLine(s);
+                        AdverbListLength += 1;
+                    }
+
+
+
+                }
+
+                string[] WordListAdverb = new string[AdverbListLength];
+                AdverbList = new string[AdverbListLength];
+                Console.WriteLine("Length .. " + AdverbListLength);
+                Console.WriteLine("String Length .. " + WordListAdverb.Length);
+                int Adverbo = 0;
+                for (int i = 0; i < FileEntriesAdverb.Length; i++)
+                {
+                    WordListAdverb = File.ReadAllLines(FileEntriesAdverb[i]);
+                    foreach (string s in WordListAdverb)
+                    {
+
+                        AdverbList[Adverbo] = s;
+                        Adverbo += 1;
+                    }
+                    LoadedLists += 1;
+                    Console.WriteLine("Loaded .. " + LoadedLists + " ");
+                }
+
+
+
+
+
+                //e.Channel.SendMessage("Adverb List Loaded");
             }
             //make sure only my messages activate pompadour ai
             if (UserName == "Angus")
@@ -133,6 +506,410 @@ namespace DiscordBot_01
                     e.Channel.SendMessage("error..");
                 }
             }
+
+
+
+            //-----------------------------------------------------------------------------------
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //
+            //Pompadour dumb ai
+            //
+            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            //-----------------------------------------------------------------------------------
+
+
+            if (e.User.Name == "MinusVitaminC")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+            if (e.User.Name == "Wedge")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "hikari")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+            if (e.User.Name == "KillaMaaki")
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.Replace("senpai", "");
+                if (text.StartsWith("~"))
+                {
+                    text = "";
+                }
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+            if (e.Message.Text.Contains("no ") || e.Message.Text.Contains("n't") || e.Message.Text.Contains("not "))
+            {
+                string path = @"AI\Negative.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.ToLower();
+                text = text.Replace("pompadour", "%NAM_");
+                text = text.Replace("pomp", "%NAM_");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+            if (e.Message.Text.Contains("greeting") || e.Message.Text.Contains("hello") || e.Message.Text.Contains("hey") || e.Message.Text.Contains("yo ") || e.Message.Text.Contains("sup ") || e.Message.Text.Contains("hai ") || e.Message.Text.Contains("hi ") || e.Message.Text.Contains("wassap"))
+            {
+                string path = @"AI\Greetings.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                text = text.ToLower();
+                text = text.Replace("pompadour", "%NAM_");
+                text = text.Replace("pomp", "%NAM_");
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (e.Message.Text.Contains("http"))
+            {
+                string path = @"AI\Links.csv";
+                string[] CharacterFile = File.ReadAllLines(path);
+                string text = e.Message.Text;
+                string[] AIfile = new string[1]
+                {
+                    text
+                };
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(text);
+                }
+                return;
+            }
+
+
+
+
+
+            if (e.Message.Text.Contains(""))
+            {
+                string text = "";
+                text = e.Message.Text;
+                text.ToLower();
+                if (text.Contains("pomp"))
+                {
+                    msgchance = 20;
+                }
+
+            }
+
+
+
+            if (e.Message.Text.Contains(""))
+            {
+                string path = @"AI\PompadourAI.csv";
+                string[] outputline = File.ReadAllLines(path);
+                var doclength = File.ReadAllLines(path).Length;
+                msgchance -= 1;
+                //Console.WriteLine("NML .. "+msgchance);
+
+                Random rnd = new Random();
+
+                int roll = rnd.Next(1, msgchance + 1);
+                int roll2 = rnd.Next(1, doclength + 1);
+                string output = "";
+
+
+                try
+                {
+                    if (roll == 1)
+                    {
+
+
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int rdtimer = (e.Message.Text.Length * 150) + 2000;
+                        int smtimer = (outputline[roll2].Length) * 50;
+                        Thread.Sleep(rdtimer);
+                        e.Channel.SendIsTyping();
+                        Thread.Sleep(smtimer);
+                        // Console.WriteLine("delay .. " + smtimer);
+                        e.Channel.SendMessage(outputline[roll2]);
+                        msgchance += 8;
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+            }
+
+            /* add greetings
+             * fix roll overflow
+             * recognize name 
+             * replace name with %NAM_
+             * 
+             * 
+             * 
+             */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (e.Message.Text.Contains("pompadour") || e.Message.Text.Contains("Pompadour") || e.Message.Text.Contains("pomp") || e.Message.Text.Contains("Pomp"))
+            {
+                string text = e.Message.Text;
+                text.ToLower();
+                //  Console.WriteLine(text);
+
+
+
+
+
+                if (text.Contains("shut") || text.Contains("stop") || text.Contains("stupid") || text.Contains("bad") || text.Contains("ultron"))
+                {
+                    string path = @"AI\Negative.csv";
+                    string[] outputline = File.ReadAllLines(path);
+                    var doclength = File.ReadAllLines(path).Length;
+                    Random rnd = new Random();
+
+                    int roll2 = rnd.Next(1, doclength + 1);
+                    string output = "";
+
+
+                    try
+                    {
+
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int rdtimer = (e.Message.Text.Length * 150) + 2000;
+                        int smtimer = (outputline[roll2].Length) * 50;
+                        Thread.Sleep(rdtimer);
+                        e.Channel.SendIsTyping();
+                        Thread.Sleep(smtimer);
+                        Console.WriteLine("NEGATIVE--delay .. " + smtimer);
+                        e.Channel.SendMessage(outputline[roll2]);
+
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+
+
+
+
+
+
+                if (text.Contains("greeting") || text.Contains("hello") || text.Contains("hey") || text.Contains("yo") || text.Contains("sup") || text.Contains("hai") || text.Contains("hi") || text.Contains("wassap"))
+                {
+                    string path = @"AI\Greetings.csv";
+                    string[] outputline = File.ReadAllLines(path);
+                    var doclength = File.ReadAllLines(path).Length;
+                    msgchance -= 1;
+                    Console.WriteLine("GREET .. " + msgchance);
+
+                    Random rnd = new Random();
+
+                    int roll = rnd.Next(1, msgchance + 1);
+                    int roll2 = rnd.Next(1, doclength + 1);
+                    string output = "";
+
+
+                    try
+                    {
+                        output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                        int rdtimer = (e.Message.Text.Length * 150) + 1000;
+                        int smtimer = (outputline[roll2].Length) * 50;
+                        Thread.Sleep(rdtimer);
+                        e.Channel.SendIsTyping();
+                        Thread.Sleep(smtimer);
+                        Console.WriteLine("GREETING--delay .. " + smtimer);
+                        text = outputline[roll2];
+                        text = text.Replace("%NAM_", e.User.Name);
+                        Console.WriteLine(text);
+                        e.Channel.SendMessage(text);
+
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+
+
+                if (text.Contains("are you") || text.Contains("what is"))
+                {
+                    string newfile = @"AI\Response1.csv";
+
+                    if (text.StartsWith("create "))
+                    {
+
+                        if (File.Exists(newfile))
+                        {
+                            string path = newfile;
+                            string[] outputline = File.ReadAllLines(path);
+                            var doclength = File.ReadAllLines(path).Length;
+                            msgchance -= 1;
+                            Console.WriteLine("RESPONSE1 .. " + msgchance);
+
+                            Random rnd = new Random();
+
+                            int roll = rnd.Next(1, msgchance + 1);
+                            int roll2 = rnd.Next(1, doclength + 1);
+                            string output = "";
+
+
+                            try
+                            {
+                                output = System.IO.File.ReadLines(path).Skip(roll2).Take(1).First();
+                                int rdtimer = (e.Message.Text.Length * 150) + 1000;
+                                int smtimer = (outputline[roll2].Length) * 50;
+                                Thread.Sleep(rdtimer);
+                                e.Channel.SendIsTyping();
+                                Thread.Sleep(smtimer);
+                                Console.WriteLine("RESPONSE1--delay .. " + smtimer);
+                                text = outputline[roll2];
+                                text = text.Replace("%NAM_", e.User.Name);
+                                Console.WriteLine(text);
+                                e.Channel.SendMessage(text);
+
+                            }
+                            catch
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                using (FileStream fs = File.Create(newfile))
+                                {
+                                    Byte[] info = new UTF8Encoding(true).GetBytes("");
+
+                                    fs.Write(info, 0, info.Length);
+
+
+                                }
+                            }
+                            catch
+                            {
+                                e.Channel.SendMessage("error");
+                                return;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             //Word Arrays
@@ -264,8 +1041,8 @@ namespace DiscordBot_01
 
 
 
-            int LoadedLists = 0;
-            if (e.Message.Text.Contains("load lists"))
+
+            if (e.Message.Text.Contains("reload lists"))
             {
 
 
@@ -615,7 +1392,11 @@ namespace DiscordBot_01
                 }
                     LoadedLists += 1;
                     Console.WriteLine("Loaded .. " + LoadedLists + " ");
-        }
+                    if ((LoadedLists > 2))
+                    {
+                        e.Channel.SendMessage("" + LoadedLists + " Files Loaded");
+                    }
+                }
 
 
 
@@ -623,10 +1404,7 @@ namespace DiscordBot_01
 
             //e.Channel.SendMessage("Adverb List Loaded");
     }
-            if (LoadedLists > 2)
-            {
-                e.Channel.SendMessage("" + LoadedLists + " Files Loaded");
-            }
+
 
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             //Response Arrays
