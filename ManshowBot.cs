@@ -89,7 +89,26 @@ namespace DiscordBot_01
             if (e.Message.IsAuthor) return;
             if (e.Message.User.Equals("RecCom1138")) return;
             //if (e.Message.User.Equals("Angus")) return;
-
+            if (e.User.Name.Equals("Angus") || (e.User.Name.Equals("Hikari")) || (e.User.Name.Equals("Ljnd")))
+            {
+                if (e.Message.Equals("MainBotMode"))
+                {
+                    ManshowBot bot = new DiscordBot_01.ManshowBot();
+                }
+                if (e.Message.Equals("DiceBotMode"))
+                {
+                    DiceRoll DR = new DiscordBot_01.DiceRoll();
+                }
+                if (e.Message.Equals("ExperimentalBotMode"))
+                {
+                    Pompadour AI = new DiscordBot_01.Pompadour();
+                }
+                if (e.Message.Equals("HibernateMode"))
+                {
+                    Program PRG = new DiscordBot_01.Program();
+                }
+            }
+            else return;
 
 
 

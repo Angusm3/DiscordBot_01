@@ -16,15 +16,59 @@ using NAudio.CoreAudioApi;
 
 namespace DiscordBot_01
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private DiscordClient PRG;
+
+        public Program()
+        {
+            PRG = new DiscordClient();
+
+            PRG.ExecuteAndWait(async () =>
+            {
+                PRG.MessageReceived += Bot_MessageReceived;
+                await PRG.Connect("treeforge2.al@gmail.com", "superbotpassword");
+            });
+
+
+
+        }
+
+        public void Bot_MessageReceived(object sender, MessageEventArgs e)
         {
 
+            
+            if (e.User.Name.Equals("Angus" ) || (e.User.Name.Equals("Hikari")) || (e.User.Name.Equals("Ljnd")))
+            {
+                if (e.Message.Equals("MainBotMode"))
+                {
+                    ManshowBot bot = new DiscordBot_01.ManshowBot();
+                }
+                if (e.Message.Equals("DiceBotMode"))
+                {
+                    DiceRoll DR = new DiscordBot_01.DiceRoll();
+                }
+                if (e.Message.Equals("ExperimentalBotMode"))
+                {
+                    Pompadour AI = new DiscordBot_01.Pompadour();
+                }
+                if (e.Message.Equals("HibernateMode"))
+                {
+                    Program PRG = new DiscordBot_01.Program();
+                }
+            }
+                else return;
 
-            ManshowBot bot = new DiscordBot_01.ManshowBot();
-            DiceRoll DR = new DiscordBot_01.DiceRoll();
-            Pompadour AI = new DiscordBot_01.Pompadour();
+
+
+
+
+        }
+
+
+
+
+
+
         }
     }
-}
